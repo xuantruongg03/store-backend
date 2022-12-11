@@ -1,5 +1,4 @@
 <div class="container-scroller">
-    <!-- partial:../../partials/_navbar.html -->
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
             <a class="navbar-brand brand-logo mr-5" href="#"><img src="../../img/logo/logo.svg" class="mr-2"
@@ -101,7 +100,6 @@
             </button>
         </div>
     </nav>
-    <!-- partial -->
     <div class="container-fluid page-body-wrapper">
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
 			<ul class="nav">
@@ -145,7 +143,6 @@
 					</div>
 				</li> --}}
 		</nav>
-        <!-- partial -->
         <div class="main-panel">
             <div class="content-wrapper">
                 <div class="row">
@@ -164,6 +161,9 @@
                                                     Tên sản phẩm
                                                 </th>
                                                 <th>
+                                                    Danh mục
+                                                </th>
+                                                <th>
                                                     Giá
                                                 </th>
                                                 <th>
@@ -177,23 +177,22 @@
                                         <tbody>
                                             <tr>
                                                 <td>
-                                                    1
+                                                    {{data.id_sanpham}}
                                                 </td>
                                                 <td>
-                                                    Herman Beck
+                                                    {{data.tensanpham}}
                                                 </td>
                                                 <td>
-                                                    <div class="progress">
-                                                        <div class="progress-bar bg-success" role="progressbar"
-                                                            style="width: 25%" aria-valuenow="25" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
-                                                    </div>
+                                                    {{data.danhmucsanpham}}
                                                 </td>
                                                 <td>
-                                                    $ 77.99
+                                                    {{data.giaban}}
                                                 </td>
                                                 <td>
-                                                    May 15, 2015
+                                                    {{data.soluong}}
+                                                </td>
+                                                <td>
+                                                    {{data.soluong}}
                                                 </td>
                                             </tr>
                                             
@@ -206,8 +205,6 @@
                 </div>
             </div>
         </div>
-        <!-- main-panel ends -->
     </div>
-    <!-- page-body-wrapper ends -->
 </div>
 </div>

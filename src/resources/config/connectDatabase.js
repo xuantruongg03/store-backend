@@ -1,18 +1,14 @@
-const sql = require("mssql/msnodesqlv8");
+const mysql = require("mysql2/promise");
 
-const config = {
-  server: "localhost",
-  database: "STORE",
-  user: "sa",
-  password: "",
-  driver: "msnodesqlv8",
-};
-
-const pool = new sql.ConnectionPool(config).connect().then((pool) => {
-  return pool;
+const pool = mysql.createPool({
+  host: "localhost",
+  user: "root",
+  password: "lexuantruong2k3@",
+  database: "store",
 });
 
-module.exports = {
-  pool,
-  sql,
-};
+pool.getConnection((err, connection) => {
+  console.log("Connected to database");
+});
+
+module.exports = pool;

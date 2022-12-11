@@ -1,0 +1,74 @@
+<div class="container-fluid mt-3 container">
+  <h1 class="mb-2">Chỉnh sửa thông tin sản phẩm</h1>
+  <form action="/update-product" method="POST">
+    <div class="form-row">
+      <div class="form-group">
+        <label for="title">Tên sản phẩm</label>
+        <input
+          class="form-control"
+          id="title"
+          name="title"
+          type="text"
+          value={{data.title_product}}
+        />
+      </div>
+    </div>
+
+    <div class="form-group mt-3 mb-3">
+      <label for="myFile" class="custom-file-input">Chọn ảnh</label>
+      <br />
+      <input name="img" type="file" class="custom-file-label" id="myFile" />
+      <select class="custom-select">
+        <option selected>Chọn loại sản phẩm</option>
+        <option value="sale">Sản phẩm khuyến mãi</option>
+        <option value="computer">Máy tính để bàn</option>
+        <option value="laptop">Máy tính xác tay</option>
+        <option value="accessory">Phụ kiện máy tính</option>
+      </select>
+    </div>
+
+    <div class="form-group mt-3 mb-3">
+      <label for="productTitle">Giá bán thường(đ)</label>
+      <input
+        type="number"
+        class="form-control"
+        id="myCost"
+        placeholder="Tên sản phẩm"
+        name="cost"
+        value={{data.cost_product}}
+      />
+    </div>
+    <div class="form-group mt-3 mb-3">
+      <label for="productTitle">Giá khuyến mãi(đ)</label>
+      <input
+        type="number"
+        class="form-control"
+        id="mySale"
+        placeholder="Tên sản phẩm"
+        name="price"
+        value={{data.price_product}}
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="description">Mô tả sản phẩm</label>
+      <textarea
+        name="description"
+        id="description"
+        class="form-control"
+        rows="5"
+      >
+        {{data.description_product}}
+      </textarea>
+    </div>
+
+    <div class="form-group mt-3">
+      <label for="detail">Chi tiết sản phẩm</label>
+      <textarea name="details" id="detail" class="form-control" rows="5">
+        {{data.detail_product}}
+      </textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Cập nhật</button>
+  </form>
+</div>

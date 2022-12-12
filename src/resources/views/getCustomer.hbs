@@ -116,7 +116,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/get-customer">
+                    <a class="nav-link" href="/update-product">
                         <i class="icon-grid menu-icon"></i>
                         <span class="menu-title">Xem người mua</span>
                     </a>
@@ -137,19 +137,16 @@
                                                     id
                                                 </th>
                                                 <th>
-                                                    Tên sản phẩm
+                                                    Họ và tên
                                                 </th>
                                                 <th>
-                                                    Danh mục
+                                                    Giới tính
                                                 </th>
                                                 <th>
-                                                    Giá gốc
+                                                    Địa chỉ
                                                 </th>
                                                 <th>
-                                                    Giá bán
-                                                </th>
-                                                <th>
-                                                    Số lượng
+                                                    Số điện thoại
                                                 </th>
                                                 <th>
                                                     Thao tác
@@ -161,22 +158,19 @@
                                         <tbody>
                                             <tr>
                                                 <td>
-                                                    {{this.id_sanpham}}
+                                                    {{this.id_khachhang}}
                                                 </td>
                                                 <td>
-                                                    {{this.tensanpham}}
+                                                    {{this.ho}}  {{this.ten}}
                                                 </td>
                                                 <td>
-                                                    {{this.danhmucsanpham}}
+                                                    {{this.gioitinh}}
                                                 </td>
                                                 <td>
-                                                    {{this.giagoc}}
+                                                    {{this.diachi}}
                                                 </td>
                                                 <td>
-                                                    {{this.giaban}}
-                                                </td>
-                                                <td>
-                                                    {{this.soluong}}
+                                                    {{this.sodienthoai}}
                                                 </td>
                                                 <td>
                                                     <a href="/update-product/{{this.id_sanpham}}">Sửa</a>

@@ -5,10 +5,10 @@ const postProductsPage = (req, res) => {
 };
 
 const createNewProduct = async (req, res) => {
-  const { title, cost, price, description, details } = req.body;
+  const { type, name, infomation, price, amount } = req.body;
   await pool.execute(
-    "INSERT INTO products (title, cost, price, description, detail) VALUES (?, ?, ?, ?, ?)",
-    [title, cost, price, description, details]
+    "INSERT INTO `sanpham` (danhmucsanpham, tensanpham, mota, giaban, soluong, hinhanh) VALUES (?, ?, ?, ?, ?, ?)",
+    [type, name, infomation, price, amount, "image"]
   );
   return res.redirect("/");
 };

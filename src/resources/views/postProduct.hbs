@@ -102,48 +102,26 @@
 	</nav>
 	<div class="container-fluid page-body-wrapper">
 		<nav class="sidebar sidebar-offcanvas" id="sidebar">
-			<ul class="nav">
-				<li class="nav-item">
-					<a class="nav-link" href="/">
-						<i class="icon-grid menu-icon"></i>
-						<span class="menu-title">Trang chủ</span>
-					</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="/post">
-						<i class="icon-grid menu-icon"></i>
-						<span class="menu-title">Thêm sản phẩm</span>
-					</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="/update-product">
-						<i class="icon-grid menu-icon"></i>
-						<span class="menu-title">Sửa sản phẩm</span>
-					</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="/delete-product">
-						<i class="icon-grid menu-icon"></i>
-						<span class="menu-title">Xóa sản phẩm</span>
-					</a>
-					{{!--
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-						<i class="icon-head menu-icon"></i>
-						<span class="menu-title">User Pages</span>
-						<i class="menu-arrow"></i>
-					</a>
-					<div class="collapse" id="auth">
-						<ul class="nav flex-column sub-menu">
-							<li class="nav-item"> <a class="nav-link" href="../../pages/samples/login.html"> Login </a>
-							</li>
-							<li class="nav-item"> <a class="nav-link" href="../../pages/samples/register.html"> Register
-								</a></li>
-						</ul>
-					</div>
-				</li> --}}
-		</nav>
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">
+                        <i class="icon-grid menu-icon"></i>
+                        <span class="menu-title">Xem sản phẩm</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/post">
+                        <i class="icon-grid menu-icon"></i>
+                        <span class="menu-title">Thêm sản phẩm</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/get-customer">
+                        <i class="icon-grid menu-icon"></i>
+                        <span class="menu-title">Xem người mua</span>
+                    </a>
+                </li>
+        </nav>
 		<div class="main-panel">
 			<div class="content-wrapper">
 				<div class="row">
@@ -154,16 +132,18 @@
 								<p class="card-description">
 									Thêm sản phẩm
 								</p>
-								<form class="forms-sample" action="post">
+								<form class="forms-sample" action="/create-new-product" method="POST">
 									<div class="form-group">
 										<label for="nameProduct">Tên sản phẩm</label>
 										<input type="text" class="form-control" id="nameProduct"
+											name="name"
 											placeholder="Tên sản phẩm">
 									</div>
 
 									<div class="form-group">
 										<label for="amountProduct">Số lượng</label>
 										<input type="text" class="form-control" id="amountProduct"
+											name="amount"
 											placeholder="Số lượng">
 									</div>
 
@@ -171,6 +151,7 @@
 										<label>Giá gốc</label>
 										<div class="input-group">
 											<input type="text" class="form-control"
+												name="cost"
 												aria-label="Amount (to the nearest VND)">
 											<div class="input-group-prepend">
 												<span class="input-group-text bg-primary text-white">.000 VND</span>
@@ -182,6 +163,7 @@
 										<label>Giá bán</label>
 										<div class="input-group">
 											<input type="text" class="form-control"
+												name="price"
 												aria-label="Amount (to the nearest VND)">
 											<div class="input-group-prepend">
 												<span class="input-group-text bg-primary text-white">.000 VND</span>
@@ -190,8 +172,8 @@
 									</div>
 
 									<div class="form-group">
-										<label for="exampleSelectGender">Loại sản phẩm</label>
-										<select class="form-control" id="exampleSelectGender">
+										<label for="typeProduct">Loại sản phẩm</label>
+										<select class="form-control" id="typeProduct" name="type">
 											<option>Máy tính để bàn</option>
 											<option>Máy tính xách tay</option>
 											<option>Phụ kiện máy tính</option>
@@ -199,7 +181,7 @@
 									</div>
 									<div class="form-group">
 										<label>Hình ảnh</label>
-										<input type="file" name="img[]" class="file-upload-default">
+										<input type="file" name="image" class="file-upload-default">
 										<div class="input-group col-xs-12">
 											<input type="text" class="form-control file-upload-info" disabled
 												placeholder="Hinh ảnh sản phẩm">
@@ -212,12 +194,12 @@
 
 									<div class="form-group">
 										<label for="infomationProduct">Mô tả sản phẩm</label>
-										<textarea class="form-control" id="infomationProduct" rows="5"></textarea>
+										<textarea class="form-control" id="infomationProduct" rows="5" name="infomation"></textarea>
 									</div>
 
 									<div class="form-group">
 										<label for="detailProduct">Chi tiết sản phẩm</label>
-										<textarea class="form-control" id="detailProduct" rows="5"></textarea>
+										<textarea class="form-control" id="detailProduct" rows="5" name="detail"></textarea>
 									</div>
 									<button type="submit" class="btn btn-primary mr-2">Đăng</button>
 								</form>

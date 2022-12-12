@@ -1,74 +1,212 @@
-<div class="container-fluid mt-3 container">
-  <h1 class="mb-2">Chỉnh sửa thông tin sản phẩm</h1>
-  <form action="/update-product" method="POST">
-    <div class="form-row">
-      <div class="form-group">
-        <label for="title">Tên sản phẩm</label>
-        <input
-          class="form-control"
-          id="title"
-          name="title"
-          type="text"
-          value={{data.title_product}}
-        />
-      </div>
-    </div>
+<div class="container-scroller">
+    <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+        <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+            <a class="navbar-brand brand-logo mr-5" href="#"><img src="../../img/logo/logo.svg" class="mr-2"
+                    alt="logo" /></a>
+            <a class="navbar-brand brand-logo-mini" href="#"><img src="../../img/logo/logo-mini.svg" alt="logo" /></a>
+        </div>
+        <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+            <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                <span class="icon-menu"></span>
+            </button>
+            <ul class="navbar-nav mr-lg-2">
+                <li class="nav-item nav-search d-none d-lg-block">
+                    <div class="input-group">
+                        <div class="input-group-prepend hover-cursor" id="navbar-search-icon">
+                            <span class="input-group-text" id="search">
+                                <i class="icon-search"></i>
+                            </span>
+                        </div>
+                        <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now"
+                            aria-label="search" aria-describedby="search">
+                    </div>
+                </li>
+            </ul>
+            <ul class="navbar-nav navbar-nav-right">
+                <li class="nav-item dropdown">
+                    <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#"
+                        data-toggle="dropdown">
+                        <i class="icon-bell mx-0"></i>
+                        <span class="count"></span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
+                        aria-labelledby="notificationDropdown">
+                        <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
+                        <a class="dropdown-item preview-item">
+                            <div class="preview-thumbnail">
+                                <div class="preview-icon bg-success">
+                                    <i class="ti-info-alt mx-0"></i>
+                                </div>
+                            </div>
+                            <div class="preview-item-content">
+                                <h6 class="preview-subject font-weight-normal">Application Error</h6>
+                                <p class="font-weight-light small-text mb-0 text-muted">
+                                    Just now
+                                </p>
+                            </div>
+                        </a>
+                        <a class="dropdown-item preview-item">
+                            <div class="preview-thumbnail">
+                                <div class="preview-icon bg-warning">
+                                    <i class="ti-settings mx-0"></i>
+                                </div>
+                            </div>
+                            <div class="preview-item-content">
+                                <h6 class="preview-subject font-weight-normal">Settings</h6>
+                                <p class="font-weight-light small-text mb-0 text-muted">
+                                    Private message
+                                </p>
+                            </div>
+                        </a>
+                        <a class="dropdown-item preview-item">
+                            <div class="preview-thumbnail">
+                                <div class="preview-icon bg-info">
+                                    <i class="ti-user mx-0"></i>
+                                </div>
+                            </div>
+                            <div class="preview-item-content">
+                                <h6 class="preview-subject font-weight-normal">New user registration</h6>
+                                <p class="font-weight-light small-text mb-0 text-muted">
+                                    2 days ago
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                </li>
+                <li class="nav-item nav-profile dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+                        <img src="../../img/faces/face28.jpg" alt="profile" />
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+                        <a class="dropdown-item">
+                            <i class="ti-settings text-primary"></i>
+                            Settings
+                        </a>
+                        <a class="dropdown-item">
+                            <i class="ti-power-off text-primary"></i>
+                            Logout
+                        </a>
+                    </div>
+                </li>
+                <li class="nav-item nav-settings d-none d-lg-flex">
+                    <a class="nav-link" href="#">
+                        <i class="icon-ellipsis"></i>
+                    </a>
+                </li>
+            </ul>
+            <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+                data-toggle="offcanvas">
+                <span class="icon-menu"></span>
+            </button>
+        </div>
+    </nav>
+    <div class="container-fluid page-body-wrapper">
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">
+                        <i class="icon-grid menu-icon"></i>
+                        <span class="menu-title">Xem sản phẩm</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/post">
+                        <i class="icon-grid menu-icon"></i>
+                        <span class="menu-title">Thêm sản phẩm</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/get-customer">
+                        <i class="icon-grid menu-icon"></i>
+                        <span class="menu-title">Sửa sản phẩm</span>
+                    </a>
+                </li>
+        </nav>
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="row">
+                    <div class="col-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Sửa sản phẩm</h4>
+                                <p class="card-description">
+                                    Sửa sản phẩm
+                                </p>
+                                <form class="forms-sample" action="/update-product/{{data.id_sanpham}}" method="POST">
+                                    <div class="form-group">
+                                        <label for="nameProduct">Tên sản phẩm</label>
+                                        <input type="text" class="form-control" id="nameProduct" name="name"
+                                            value="{{data.tensanpham}}" placeholder="Tên sản phẩm">
+                                    </div>
 
-    <div class="form-group mt-3 mb-3">
-      <label for="myFile" class="custom-file-input">Chọn ảnh</label>
-      <br />
-      <input name="img" type="file" class="custom-file-label" id="myFile" />
-      <select class="custom-select">
-        <option selected>Chọn loại sản phẩm</option>
-        <option value="sale">Sản phẩm khuyến mãi</option>
-        <option value="computer">Máy tính để bàn</option>
-        <option value="laptop">Máy tính xác tay</option>
-        <option value="accessory">Phụ kiện máy tính</option>
-      </select>
-    </div>
+                                    <div class="form-group">
+                                        <label for="amountProduct">Số lượng</label>
+                                        <input type="text" class="form-control" id="amountProduct" name="amount"
+                                            value={{data.soluong}} placeholder="Số lượng">
+                                    </div>
 
-    <div class="form-group mt-3 mb-3">
-      <label for="productTitle">Giá bán thường(đ)</label>
-      <input
-        type="number"
-        class="form-control"
-        id="myCost"
-        placeholder="Tên sản phẩm"
-        name="cost"
-        value={{data.cost_product}}
-      />
-    </div>
-    <div class="form-group mt-3 mb-3">
-      <label for="productTitle">Giá khuyến mãi(đ)</label>
-      <input
-        type="number"
-        class="form-control"
-        id="mySale"
-        placeholder="Tên sản phẩm"
-        name="price"
-        value={{data.price_product}}
-      />
-    </div>
+                                    <div class="form-group">
+                                        <label>Giá gốc</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="cost" value={{data.giagoc}}
+                                                aria-label="Amount (to the nearest VND)">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text bg-primary text-white">.000 VND</span>
+                                            </div>
+                                        </div>
+                                    </div>
 
-    <div class="form-group">
-      <label for="description">Mô tả sản phẩm</label>
-      <textarea
-        name="description"
-        id="description"
-        class="form-control"
-        rows="5"
-      >
-        {{data.description_product}}
-      </textarea>
-    </div>
+                                    <div class="form-group">
+                                        <label>Giá bán</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="price" value={{data.giaban}}
+                                                aria-label="Amount (to the nearest VND)">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text bg-primary text-white">.000 VND</span>
+                                            </div>
+                                        </div>
+                                    </div>
 
-    <div class="form-group mt-3">
-      <label for="detail">Chi tiết sản phẩm</label>
-      <textarea name="details" id="detail" class="form-control" rows="5">
-        {{data.detail_product}}
-      </textarea>
-    </div>
+                                    <div class="form-group">
+                                        <label for="typeProduct">Loại sản phẩm</label>
+                                        <select class="form-control" id="typeProduct" name="type">
+                                            <option selected>{{data.danhmucsanpham}}</option>
+                                            <option>Máy tính để bàn</option>
+                                            <option>Máy tính xách tay</option>
+                                            <option>Phụ kiện máy tính</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Hình ảnh</label>
+                                        <input type="file" name="image" class="file-upload-default">
+                                        <div class="input-group col-xs-12">
+                                            <input type="text" class="form-control file-upload-info" disabled
+                                                placeholder="Hinh ảnh sản phẩm">
+                                            <span class="input-group-append">
+                                                <button class="file-upload-browse btn btn-primary" type="button">Tải
+                                                    lên</button>
+                                            </span>
+                                        </div>
+                                    </div>
 
-    <button type="submit" class="btn btn-primary mt-3">Cập nhật</button>
-  </form>
+                                    <div class="form-group">
+                                        <label for="infomationProduct">Mô tả sản phẩm</label>
+                                        <textarea class="form-control" id="infomationProduct" rows="5"
+                                            name="infomation">{{data.mota}}</textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="detailProduct">Chi tiết sản phẩm</label>
+                                        <textarea class="form-control" id="detailProduct" rows="5"
+                                            name="detail"></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary mr-2">Đăng</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

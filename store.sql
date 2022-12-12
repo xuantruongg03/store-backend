@@ -19,7 +19,8 @@ CREATE TABLE sanpham
 CREATE TABLE khachhang
 (
     id_khachhang INT NOT NULL,
-    hoten NVARCHAR(255),
+    ho NVARCHAR(45),
+    ten NVARCHAR(45),
     diachi NVARCHAR(255),
     sodienthoai CHAR(11),
     gioitinh NVARCHAR(5),
@@ -27,20 +28,6 @@ CREATE TABLE khachhang
         PRIMARY KEY (id_khachhang)
 );
 
-CREATE TABLE donhang
-(
-    id_donhang INT NOT NULL,
-    id_khachhang INT NOT NULL,
-    ngaydathang DATETIME,
-    ngaygiaohang DATETIME,
-    hinhthucthanhtoan NVARCHAR(255),
-    ghichu NVARCHAR(255),
-    CONSTRAINT PK_donhang
-        PRIMARY KEY (
-                        id_donhang,
-                        id_khachhang
-                    ),
-);
 
 CREATE TABLE chitietdonhang
 (
@@ -60,6 +47,9 @@ CREATE TABLE hoadon
     id_chitietdonhang INT NOT NULL,
     id_sanpham INT NOT NULL,
     id_khachhang INT NOT NULL,
+    ngaydathang DATE,
+    hinhthucthanhtoan NVARCHAR(255),
+    ghichu NVARCHAR(255),
     CONSTRAINT PK_hoadon
         PRIMARY KEY (id_hoadon),
 );
@@ -80,3 +70,9 @@ ADD CONSTRAINT FK_ctdh
     REFERENCES dbo.hoadon (id_hoadon);
 
 Insert into sanpham values(1,'Máy tính xách tay','Lenovo ideapad 15ITL6','Điện thoại Iphone 6',10000000,10,'iphone6.jpg');
+
+Hiển thị thông tin người mua sản phẩm 
+=> ((kết nối hóa đơn với khách hàng qua trường id khách hàng) kết nối với chi tiết đặt hàng qua trường id hóa đơn) 
+kết nooid với bảng sản phẩm qua trường id sản phẩm => hiển thị ra tên khách hàng, giới tính, địa chỉ, số điện thoại, số hóa đơn,
+tên sản phẩm mua, số lượng sản phẩm mua, hình thức thanh toán, thành tiền, ghi chú.
+

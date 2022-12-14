@@ -1,8 +1,12 @@
 {
   "ExpandedNodes": [
     "",
-    "\\src"
+    "\\src",
+    "\\src\\resources",
+    "\\src\\resources\\controller",
+    "\\src\\resources\\controller\\api",
+    "\\src\\resources\\route",
+    "\\src\\resources\\views"
   ],
-  "SelectedNode": "\\src\\index.js",
   "PreviewInSolutionExplorer": false
 }

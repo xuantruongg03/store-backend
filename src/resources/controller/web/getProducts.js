@@ -1,7 +1,7 @@
-const pool = require("../config/connectDatabase");
-const homePage = async (req, res) => {
+const pool = require("../../config/connectDatabase");
+const getProducts = async (req, res) => {
   const [rows, fields] = await pool.execute("SELECT * FROM `sanpham`");
-  return res.render("home", { data: rows });
+  return res.render("getProducts", { data: rows });
 };
 
 const deleteProduct = async (req, res) => {
@@ -15,8 +15,7 @@ const getProduct = async (req, res) => {
     "SELECT * FROM `sanpham` WHERE `id_sanpham` = ?",
     [req.params.id]
   );
-  console.log(rows[0]);
   return res.render("updateProduct", { data: rows[0] });
 };
 
-module.exports = { homePage, deleteProduct, getProduct };
+module.exports = { getProducts, deleteProduct, getProduct };

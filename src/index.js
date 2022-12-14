@@ -4,7 +4,7 @@ const morgan = require("morgan");
 require("dotenv").config();
 const handlebars = require("express-handlebars");
 const initWebRoute = require("./resources/route/web");
-const db = require("./resources/config/connectDatabase")
+const initAPIWebRoute = require("./resources/route/api");
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -28,6 +28,7 @@ app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "/resources/views"));
 
 initWebRoute(app);
+initAPIWebRoute(app);
 
 app.listen(port, () => {
   console.log("Server is running on port " + port);

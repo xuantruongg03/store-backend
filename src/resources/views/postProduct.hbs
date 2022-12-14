@@ -102,26 +102,26 @@
 	</nav>
 	<div class="container-fluid page-body-wrapper">
 		<nav class="sidebar sidebar-offcanvas" id="sidebar">
-            <ul class="nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="/">
-                        <i class="icon-grid menu-icon"></i>
-                        <span class="menu-title">Xem sản phẩm</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/post">
-                        <i class="icon-grid menu-icon"></i>
-                        <span class="menu-title">Thêm sản phẩm</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/get-customer">
-                        <i class="icon-grid menu-icon"></i>
-                        <span class="menu-title">Xem người mua</span>
-                    </a>
-                </li>
-        </nav>
+			<ul class="nav">
+				<li class="nav-item">
+					<a class="nav-link" href="/">
+						<i class="icon-grid menu-icon"></i>
+						<span class="menu-title">Xem sản phẩm</span>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/post-product">
+						<i class="icon-grid menu-icon"></i>
+						<span class="menu-title">Thêm sản phẩm</span>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/get-customer">
+						<i class="icon-grid menu-icon"></i>
+						<span class="menu-title">Xem khách hàng</span>
+					</a>
+				</li>
+		</nav>
 		<div class="main-panel">
 			<div class="content-wrapper">
 				<div class="row">
@@ -134,49 +134,41 @@
 								</p>
 								<form class="forms-sample" action="/create-new-product" method="POST">
 									<div class="form-group">
-										<label for="nameProduct">Tên sản phẩm</label>
-										<input type="text" class="form-control" id="nameProduct"
-											name="name"
+										<label for="unitProduct">Tên sản phẩm</label>
+										<input type="text" class="form-control" id="unitProduct" name="name"
 											placeholder="Tên sản phẩm">
 									</div>
 
 									<div class="form-group">
-										<label for="amountProduct">Số lượng</label>
-										<input type="text" class="form-control" id="amountProduct"
-											name="amount"
+										<label for="quantityProduct">Số lượng</label>
+										<input type="number" class="form-control" id="quantityProduct" name="quantity"
 											placeholder="Số lượng">
 									</div>
 
-									<div class="form-group">
-										<label>Giá gốc</label>
-										<div class="input-group">
-											<input type="text" class="form-control"
-												name="cost"
-												aria-label="Amount (to the nearest VND)">
-											<div class="input-group-prepend">
-												<span class="input-group-text bg-primary text-white">.000 VND</span>
-											</div>
-										</div>
-									</div>
 
 									<div class="form-group">
 										<label>Giá bán</label>
 										<div class="input-group">
-											<input type="text" class="form-control"
-												name="price"
+											<input type="text" class="form-control" name="price"
 												aria-label="Amount (to the nearest VND)">
 											<div class="input-group-prepend">
 												<span class="input-group-text bg-primary text-white">.000 VND</span>
 											</div>
 										</div>
+									</div>
+
+									<div class="form-group">
+										<label for="nameProduct">Đơn vị tính</label>
+										<input type="text" class="form-control" id="unitProduct" name="unit"
+											placeholder="Đơn vị tính">
 									</div>
 
 									<div class="form-group">
 										<label for="typeProduct">Loại sản phẩm</label>
 										<select class="form-control" id="typeProduct" name="type">
-											<option>Máy tính để bàn</option>
-											<option>Máy tính xách tay</option>
-											<option>Phụ kiện máy tính</option>
+											<option>Máy Tính Bàn</option>
+											<option>Máy Tính Xách Tay</option>
+											<option>Phụ Kiện Máy Tính</option>
 										</select>
 									</div>
 									<div class="form-group">
@@ -194,12 +186,14 @@
 
 									<div class="form-group">
 										<label for="infomationProduct">Mô tả sản phẩm</label>
-										<textarea class="form-control" id="infomationProduct" rows="5" name="infomation"></textarea>
+										<textarea class="form-control" id="infomationProduct" rows="5"
+											name="infomation"></textarea>
 									</div>
 
 									<div class="form-group">
 										<label for="detailProduct">Chi tiết sản phẩm</label>
-										<textarea class="form-control" id="detailProduct" rows="5" name="detail"></textarea>
+										<textarea class="form-control" id="detailProduct" rows="5"
+											name="detail"></textarea>
 									</div>
 									<button type="submit" class="btn btn-primary mr-2">Đăng</button>
 								</form>

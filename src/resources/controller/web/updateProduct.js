@@ -1,5 +1,5 @@
 
-const pool = require("../config/connectDatabase");
+const pool = require("../../config/connectDatabase");
 
 const updateProduct = async (req, res) => {
     const { type, name, infomation, price, amount } = req.body;

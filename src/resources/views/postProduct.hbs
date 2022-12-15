@@ -132,7 +132,7 @@
 								<p class="card-description">
 									Thêm sản phẩm
 								</p>
-								<form class="forms-sample" action="/create-new-product" method="POST">
+								<form class="forms-sample" action="/create-new-product" method="POST" enctype="multipart/form-data">
 									<div class="form-group">
 										<label for="unitProduct">Tên sản phẩm</label>
 										<input type="text" class="form-control" id="unitProduct" name="name"
@@ -193,7 +193,7 @@
 									<div class="form-group">
 										<label for="detailProduct">Chi tiết sản phẩm</label>
 										<textarea class="form-control" id="detailProduct" rows="5"
-											name="detail"></textarea>
+											name="detail" maxlength="400"></textarea>
 									</div>
 									<button type="submit" class="btn btn-primary mr-2">Đăng</button>
 								</form>

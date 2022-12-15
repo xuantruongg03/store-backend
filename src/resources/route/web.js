@@ -4,6 +4,7 @@ const postProducts = require("../controller/web/postProduct");
 const updateProduct = require("../controller/web/updateProduct");
 const deleteProduct = require("../controller/web/deleteProduct");
 const getCustomer = require("../controller/web/getCustomer");
+const uploadCloud = require("../config/cloudinary.config");
 
 let router = express.Router();
 
@@ -11,7 +12,7 @@ const initWebRoute = (app) => {
   
   router.get("/", getProducts.getProducts);
   router.get("/post-product", postProducts.postProductsPage);
-  router.post("/create-new-product", postProducts.createNewProduct);
+  router.post("/create-new-product", uploadCloud.single('image'), postProducts.createNewProduct);
   router.get("/update-product/:id", getProducts.getProduct);
   router.post("/update-product/:id", updateProduct.updateProduct);
   router.get("/delete-product/:id", deleteProduct.deleteProduct);

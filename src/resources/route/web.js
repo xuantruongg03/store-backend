@@ -13,12 +13,11 @@ const initWebRoute = (app) => {
   router.get("/", getProducts.getProducts);
   router.get("/post-product", postProducts.postProductsPage);
   router.post("/create-new-product", uploadCloud.single('image'), postProducts.createNewProduct);
-  router.get("/update-product/:id", getProducts.getProduct);
-  router.post("/update-product/:id", updateProduct.updateProduct);
+  router.get("/update-product/:id", updateProduct.updateProductGet);
+  router.post("/update-product/:id", updateProduct.updateProductPost);
   router.get("/delete-product/:id", deleteProduct.deleteProduct);
   router.get("/get-customer", getCustomer.getCustomer);
 
   return app.use("/", router);
 };
-
 module.exports = initWebRoute;

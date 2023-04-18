@@ -1,0 +1,101 @@
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Đơn hàng</h4>
+                    <div class="table-responsive pt-3">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        ID
+                                    </th>
+                                    <th>
+                                        Tên sản phẩm
+                                    </th>
+                                    <th>
+                                        Số lượng
+                                    </th>
+                                    <th>
+                                        Giá bán
+                                    </th>
+                                    <th>
+                                        Giảm giá(%)
+                                    </th>
+                                    <th>
+                                        Thành tiền
+                                    </th>
+                                    <th>
+                                        Tên người nhận
+                                    </th>
+                                    <th>
+                                        Số điện thoại
+                                    </th>
+                                    <th>
+                                        Địa chỉ
+                                    </th>
+                                    <th>
+                                        Hình thức thanh toán
+                                    </th>
+                                    <th>
+                                        Ghi chú
+                                    </th>
+                                    <th>
+                                        Thao tác
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            {{#each data}}
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        {{this.order_id}}
+                                    </td>
+                                    <td>
+                                        {{this.product_name}}
+                                    </td>
+                                    <td>
+                                        {{this.total_amount}}
+                                    </td>
+                                    <td>
+                                        {{this.product_price}}
+                                    </td>
+                                    <td>
+                                        {{this.product_sale_price}}
+                                    </td>
+                                    <td>
+                                        {{math (math this.product_price "*" this.total_amount) "-" (math (math
+                                        this.product_sale_price "/" 100) "*" this.product_price)}}
+                                    </td>
+                                    <td>
+                                        {{this.first_name}} {{this.last_name}}
+                                    </td>
+                                    <td>
+                                        {{this.number_phone}}
+                                    </td>
+                                    <td>
+                                        {{this.address}}
+                                    </td>
+                                    <td>
+                                        {{this.payment}}
+                                    </td>
+                                    <td>
+                                        {{this.notes}}
+                                    </td>
+                                    <td>
+                                        <a href="/web/export-bill/{{this.order_id}}">Xuất hóa đơn</a> |
+                                        <a href="/web/delete-order/{{this.order_id}}">Xóa</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            {{/each}}
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

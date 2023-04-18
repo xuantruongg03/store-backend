@@ -3,8 +3,8 @@ const path = require("path");
 const morgan = require("morgan");
 require("dotenv").config();
 const handlebars = require("express-handlebars");
-const initWebRoute = require("./resources/route/web");
-const initAPIWebRoute = require("./resources/route/api");
+const initWebRoute = require("./src/resources/route/web");
+const initAPIWebRoute = require("./src/resources/route/api");
 const cookieParser = require("cookie-parser");
 
 const app = express();

@@ -1,7 +1,7 @@
 const nodeExternals = require('webpack-node-externals');
 module.exports = {
     // mode: 'development',
-    entry: './src/index.js',
+    entry: './index.js',
     output: {
       filename: 'bundle.js'
     },

@@ -11,13 +11,13 @@ const postBanner = async (req, res) => {
   await pool.execute(
     `INSERT INTO banners (banner_name, banner_image) VALUES ('${name}', '${image}')`
   );
-  return res.redirect("/web/get-banners");
+  return res.redirect("/cms/get-banners");
 };
 
 const deleteBanner = async (req, res) => {
     const { banner_id } = req.query;
     await pool.execute(`DELETE FROM banners WHERE banner_id = ${banner_id}`);
-    return res.redirect("/web/get-banners");
+    return res.redirect("/cms/get-banners");
 }
 
 const postBannerPage = (req, res) => {

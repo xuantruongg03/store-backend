@@ -14,7 +14,7 @@ const exportBill = async (req, res) => {
 const deleteRepair = async (req, res) => {
     const { schedule_id } = req.params;
     await pool.execute(`DELETE FROM repair_schedule WHERE schedule_id = ?`, [schedule_id]);
-    return res.redirect("/web/getBookings");
+    return res.redirect("/cms/getBookings");
   };
 
 module.exports = { getBookings, exportBill, deleteRepair };

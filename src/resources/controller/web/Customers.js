@@ -12,7 +12,7 @@ const deleteCustomer = async (req, res) => {
     await pool.execute(
         `DELETE FROM customers WHERE customer_id= ?`, [id]
     );
-    return res.redirect("/web/get-customer");
+    return res.redirect("/cms/get-customer");
 };
 
 module.exports = { getCustomers, deleteCustomer };

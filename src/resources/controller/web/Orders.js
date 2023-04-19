@@ -176,7 +176,7 @@ const exportBill = async (req, res) => {
 
     await pool.execute(`delete from order_items where order_id = ${order_id}`);
     await pool.execute(`delete from orders where order_id = ${order_id}`);
-    res.redirect("/web/get-orders");
+    res.redirect("/cms/get-orders");
   } catch (error) {
     console.log(error);
   }

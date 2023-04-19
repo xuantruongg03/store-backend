@@ -25,7 +25,7 @@ const deleteProduct = async (req, res) => {
     id,
   ]);
   await pool.execute("DELETE FROM `products` where product_id = ?", [id]);
-  return res.redirect("/web/get-products");
+  return res.redirect("/cms/get-products");
 };
 
 const postProductsPage = (req, res) => {

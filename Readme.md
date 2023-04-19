@@ -1,7 +1,7 @@
 # I. Giới thiệu sản phẩm
 
 # II. Công nghệ sử dụng
-
+nodeJS v14.17.0
 # III. Các chức năng
 ## Server side rendering
     1. Đăng nhập 

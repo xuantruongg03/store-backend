@@ -7,12 +7,4 @@ const getCustomers = async (req, res) => {
   return res.render("getCustomer", { data: rows });
 };
 
-const deleteCustomer = async (req, res) => {
-    const { id } = req.params;
-    await pool.execute(
-        `DELETE FROM customers WHERE customer_id= ?`, [id]
-    );
-    return res.redirect("/cms/get-customer");
-};
-
-module.exports = { getCustomers, deleteCustomer };
+module.exports = { getCustomers };

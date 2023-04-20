@@ -18,6 +18,9 @@
                                         Hình ảnh
                                     </th>
                                     <th>
+                                        Loại
+                                    </th>
+                                    <th>
                                         Thao tác
                                     </th>
                                 </tr>
@@ -36,7 +39,10 @@
                                         <img src="{{this.banner_image}}" alt="Banner">
                                     </td>
                                     <td>
-                                        <a href="/cms/delete-banner?banner_id={{this.banner_id}}">Xóa</a>
+                                        {{this.banner_type}}
+                                    </td>
+                                    <td>
+                                        <a href="/cms/delete-banner?banner_id={{this.banner_id}}" class="text-sky-500 underline">Xóa</a>
                                     </td>
                                 </tr>
                             </tbody>

@@ -36,8 +36,8 @@ const initWebRoute = (app) => {
 
   //Web order
   router.get("/get-orders", Order.getOrder);
-  router.get("/export-bill/:order_id", Order.exportBill);
-  router.get("/delete-order/:order_id", Order.deleteOrder);
+  router.get("/export-bill/:customer_id", Order.exportBill);
+  router.get("/delete-order/:customer_id", Order.deleteOrder);
   
   //Web banner
   router.get("/get-banners", Banners.getBanner);

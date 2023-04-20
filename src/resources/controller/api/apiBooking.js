@@ -15,7 +15,7 @@ const booking = async (req, res) => {
   try {
     await pool.execute(
       `INSERT INTO repair_schedule (customer_id, first_name, last_name, gender, address, number_phone, email, repair_date, problem)
-            VALUES (${customer_id}, '${first_name}', '${last_name}', '${address}', '${gender}', '${number_phone}', '${email}', '${repair_date}', '${problem}')`
+            VALUES ('${customer_id}', '${first_name}', '${last_name}', '${address}', '${gender}', '${number_phone}', '${email}', '${repair_date}', '${problem}')`
     );
   } catch (error) {
     return res.status(500).json({

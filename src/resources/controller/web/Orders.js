@@ -5,24 +5,25 @@ const PdfTable = require("voilab-pdf-table");
 
 const getOrder = async (req, res) => {
   const [rows, feilds] = await pool.query(
-    `SELECT orders.order_id, order_items.product_id, products.product_name, orders.total_amount, order_items.first_name, order_items.last_name, 
+    `SELECT orders.order_id, orders.customer_id, orders.product_id, products.product_name, orders.order_quantity, order_items.first_name, order_items.last_name, 
     order_items.address, order_items.number_phone, order_items.payment, order_items.notes, orders.order_date, products.product_price, 
     products.product_sale_price
-    FROM (orders inner join order_items on orders.order_id = order_items.order_id)
-    inner join products on order_items.product_id = products.product_id`
+    FROM ((orders inner join order_items on orders.order_id = order_items.order_id)
+    inner join products on orders.product_id = products.product_id) inner join customers on orders.customer_id = customers.customer_id`
   );
   res.render("order", { data: rows });
 };
 
 const exportBill = async (req, res) => {
-  const order_id = req.params.order_id;
+  const customer_id = req.params.customer_id;
   try {
     const [rows, feilds] = await pool.query(
-      `SELECT orders.order_id, order_items.product_id, products.product_name, orders.total_amount, order_items.first_name, order_items.last_name, 
+      `SELECT orders.order_id, orders.product_id, products.product_name, orders.order_quantity, order_items.first_name, order_items.last_name, 
           order_items.address, order_items.number_phone, order_items.payment, order_items.notes, orders.order_date, products.product_price, 
           products.product_sale_price
-          FROM (orders inner join order_items on orders.order_id = order_items.order_id)
-          inner join products on order_items.product_id = products.product_id where orders.order_id = ${order_id}`
+          FROM ((orders inner join order_items on orders.order_id = order_items.order_id)
+          inner join products on orders.product_id = products.product_id) inner join customers on orders.customer_id = customers.customer_id 
+          where orders.customer_id = ${customer_id}`
     );
     const order = rows;
     let total_price = 0;
@@ -30,16 +31,16 @@ const exportBill = async (req, res) => {
     for (let i = 0; i < order.length; i++) {
       const element = order[i];
       let total =
-        element.product_price * element.total_amount -
+        element.product_price * element.order_quantity -
         (element.product_sale_price / 100) *
           element.product_price *
-          element.total_amount;
+          element.order_quantity;
       let formattedAmount = (total * 1000).toLocaleString() + " VNĐ";
       total_price += total;
       array.push({
         id: i + 1,
         product_name: element.product_name,
-        quantity: Number(element.total_amount).toFixed(),
+        quantity: Number(element.order_quantity).toFixed(),
         sale: element.product_sale_price,
         price: formattedAmount,
       });
@@ -53,9 +54,9 @@ const exportBill = async (req, res) => {
     const doc = new Document();
     doc.pipe(fs.createWriteStream(`order-${order.order_id}.pdf`));
     doc.pipe(res);
-    doc.font("src/public/font/arial.ttf");
+    doc.font("public/font/arial.ttf");
     doc
-      .image("src/public/img/logo/logo.png")
+      .image("public/img/logo/logo.png")
       .moveUp()
       .moveUp()
       .moveUp()
@@ -174,8 +175,11 @@ const exportBill = async (req, res) => {
     doc.moveDown();
     doc.end();
 
-    await pool.execute(`delete from order_items where order_id = ${order_id}`);
-    await pool.execute(`delete from orders where order_id = ${order_id}`);
+    for (let i = 0; i < order.length; i++) {
+        const element = order[i];
+        await pool.execute(`delete from order_items where order_id = ${element.order_id}`);
+        await pool.execute(`delete from orders where order_id = ${element.order_id}`);
+      }
     res.redirect("/cms/get-orders");
   } catch (error) {
     console.log(error);
@@ -184,7 +188,10 @@ const exportBill = async (req, res) => {
 
 const deleteOrder = async (req, res) => {
     try {
-        const order_id = req.params.order_id;
+        const customer_id = req.params.customer_id;
+        const [rows, fields] = await pool.execute(`select * from orders where customer_id = ${customer_id}`);
+        const order_id = rows[0].order_id;
+        console.log(order_id);
         await pool.execute(`delete from order_items where order_id = ${order_id}`);
         await pool.execute(`delete from orders where order_id = ${order_id}`);
         res.redirect("back");

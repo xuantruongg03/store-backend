@@ -24,25 +24,38 @@ app.use(cookieParser());
 //   "hbs",
 //   handlebars.engine({
 //     extname: ".hbs",
-//     helpers: {
-//       // Function to do basic mathematical operation in handlebar
-//       math: function (lvalue, operator, rvalue) {
-//         lvalue = parseFloat(lvalue);
-//         rvalue = parseFloat(rvalue);
-//         return {
-//           "+": lvalue + rvalue,
-//           "-": lvalue - rvalue,
-//           "*": lvalue * rvalue,
-//           "/": lvalue / rvalue,
-//           "%": lvalue % rvalue,
-//         }[operator];
-//       },
-//     },
+    // helpers: {
+    //   // Function to do basic mathematical operation in handlebar
+    //   math: function (lvalue, operator, rvalue) {
+    //     lvalue = parseFloat(lvalue);
+    //     rvalue = parseFloat(rvalue);
+    //     return {
+    //       "+": lvalue + rvalue,
+    //       "-": lvalue - rvalue,
+    //       "*": lvalue * rvalue,
+    //       "/": lvalue / rvalue,
+    //       "%": lvalue % rvalue,
+    //     }[operator];
+    //   },
+    // },
 //   })
 // );
 
 // app.set("view engine", "hbs");
-app.engine('.hbs', handlebars({extname: '.hbs'}));
+app.engine('.hbs', handlebars({extname: '.hbs', helpers: {
+    // Function to do basic mathematical operation in handlebar
+    math: function (lvalue, operator, rvalue) {
+      lvalue = parseFloat(lvalue);
+      rvalue = parseFloat(rvalue);
+      return {
+        "+": lvalue + rvalue,
+        "-": lvalue - rvalue,
+        "*": lvalue * rvalue,
+        "/": lvalue / rvalue,
+        "%": lvalue % rvalue,
+      }[operator];
+    },
+  },}));
 app.set('view engine', 'hbs');
 app.set("views", path.join(__dirname, "./src/resources/views"));
 

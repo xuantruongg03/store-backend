@@ -57,7 +57,7 @@
                                         {{this.product_name}}
                                     </td>
                                     <td>
-                                        {{this.total_amount}}
+                                        {{this.order_quantity}}
                                     </td>
                                     <td>
                                         {{this.product_price}}
@@ -66,7 +66,7 @@
                                         {{this.product_sale_price}}
                                     </td>
                                     <td>
-                                        {{math (math this.product_price "*" this.total_amount) "-" (math (math
+                                        {{math (math this.product_price "*" this.order_quantity) "-" (math (math
                                         this.product_sale_price "/" 100) "*" this.product_price)}}
                                     </td>
                                     <td>
@@ -85,8 +85,8 @@
                                         {{this.notes}}
                                     </td>
                                     <td>
-                                        <a href="/web/export-bill/{{this.order_id}}">Xuất hóa đơn</a> |
-                                        <a href="/web/delete-order/{{this.order_id}}">Xóa</a>
+                                        <a href="/cms/export-bill/{{this.customer_id}}">Xuất hóa đơn</a> |
+                                        <a href="/cms/delete-order/{{this.customer_id}}">Xóa</a>
                                     </td>
                                 </tr>
                             </tbody>

@@ -6,7 +6,7 @@ const getUser = async (req, res) => {
     const { customer_id } = req.user;
     // console.log(req.user);
     const [rows, feilds] = await pool.query(
-      `SELECT * FROM customers WHERE customer_id = ${customer_id}`
+      `SELECT * FROM customers WHERE customer_id = '${customer_id}'`
     );
     return res.status(200).json({
       message: "Success",
@@ -24,7 +24,7 @@ const updateUser = async (req, res) => {
     let { first_name, last_name, avatar } = req.body;
     const { customer_id } = req.user;
     await pool.execute(
-      `UPDATE customers SET first_name = '${first_name}', last_name = '${last_name}', avatar = '${avatar}' WHERE customer_id = ${customer_id}`
+      `UPDATE customers SET first_name = '${first_name}', last_name = '${last_name}', avatar = '${avatar}' WHERE customer_id = '${customer_id}'`
     );
     return res.status(200).json({
       message: "ok",
@@ -38,7 +38,7 @@ const updateUser = async (req, res) => {
 
 const getCapcha = async (req, res) => {
   const { username, email } = req.body;
-  console.log(username, email);
+//   console.log(username, email);
   if (!username || !email) {
     return res.status(400).json({
       message: "Not found username or email",
@@ -47,7 +47,7 @@ const getCapcha = async (req, res) => {
   const [rows, feilds] = await pool.query(
     `SELECT * FROM customers WHERE username = '${username}' AND email = '${email}'`
   );
-  console.log(rows);
+//   console.log(rows);
   if (rows.length <= 0) {
     return res.sendStatus(401).json({
       message: "Not found username",

@@ -25,7 +25,7 @@ const deleteProduct = async (req, res) => {
     id,
   ]);
   await pool.execute("DELETE FROM `products` where product_id = ?", [id]);
-  return res.redirect("/cms/get-products");
+  return res.redirect("/cms");
 };
 
 const postProductsPage = (req, res) => {
@@ -62,21 +62,25 @@ const createNewProduct = async (req, res) => {
     const { path } = file;
     urls.push(path);
   }
+  let a = new Date();
+  let id = "";
+      do {
+        id = `${product_type[0].toUpperCase()}${a.getDate()}${a.getSeconds()}${Math.floor(Math.random() * 1000)}`
+      } while (await checkIDProduct(id));
 
   await pool.execute(
-    `INSERT INTO products (product_name, product_description, product_price, product_sale_price, product_type, product_quantity)
-      VALUES ('${name}', '${infomation}', ${price}, ${sale}, '${type}', ${quantity});`
+    `INSERT INTO products (product_id, product_name, product_description, product_price, product_sale_price, product_type, product_quantity)
+      VALUES ('${id}', '${name}', '${infomation}', ${price}, ${sale}, '${type}', ${quantity});`
   );
 
   const [rows, fields] = await pool.execute(
     `SELECT max(product_id) as product_id FROM products`
   );
-  const product_id = rows[0].product_id;
   if (urls.length > 0) {
     urls.map((element) => {
       pool.execute(
         `INSERT INTO product_images (product_id, file_path)
-                    VALUES (${product_id} ,'${element}')`
+                    VALUES ('${id}' ,'${element}')`
       );
     });
   }
@@ -85,12 +89,22 @@ const createNewProduct = async (req, res) => {
     details.map((element) => {
       pool.execute(
         `INSERT INTO product_details (product_id, detail_name, detail_value)
-              VALUES (${product_id}, '${element.detail_name}', '${element.detail_value}')`
+              VALUES ('${id}', '${element.detail_name}', '${element.detail_value}')`
       );
     });
   }
   return res.redirect("/cms");
 };
+
+const checkIDProduct = async (id) => {
+    const [rows, fields] = await pool.execute(
+        `SELECT * FROM products WHERE product_id = '${id}'`
+    );
+    if (rows.length > 0) {
+        return true;
+    }
+    return false;
+}
 
 const postProductExcel = async (req, res) => {
   const file = req.file;
@@ -107,6 +121,12 @@ const postProductExcel = async (req, res) => {
         product_type,
         product_quantity,
       } = element;
+      let a = new Date();
+      let id = "";
+      do {
+        id = `${product_type[0].toUpperCase()}${a.getDate()}${a.getSeconds()}${Math.floor(Math.random() * 1000)}`
+      } while (await checkIDProduct(id));
+
       const tmp = element.product_details.split("; ");
       const details = [];
       const images = element.product_images.split(", ");
@@ -118,59 +138,26 @@ const postProductExcel = async (req, res) => {
         });
       });
       await pool.execute(
-        `INSERT INTO products (product_name, product_description, product_price, product_sale_price, product_type, product_quantity)
-              VALUES ('${product_name}', '${product_description}', ${product_price}, ${product_sale_price}, '${product_type}', ${product_quantity});`
+        `INSERT INTO products (product_id, product_name, product_description, product_price, product_sale_price, product_type, product_quantity)
+              VALUES ('${id}', '${product_name}', '${product_description}', ${product_price}, ${product_sale_price}, '${product_type}', ${product_quantity});`
       );
-      const [rows, fields] = await pool.execute(
-        `SELECT max(product_id) as product_id FROM products`
-      );
-      const product_id = rows[0].product_id;
+
       images.map((element) => {
         pool.execute(
           `INSERT INTO product_images (product_id, file_path)
-                      VALUES (${product_id} ,'${element}')`
+                      VALUES ('${id}' ,'${element}')`
         );
       });
       details.map((element) => {
         pool.execute(
           `INSERT INTO product_details (product_id, detail_name, detail_value)
-                    VALUES (${product_id}, '${element.detail_name}', '${element.detail_value}')`
+                    VALUES ('${id}', '${element.detail_name}', '${element.detail_value}')`
         );
       });
     });
   } catch (error) {
     console.log(error);
   }
-  // const products = data.slice(1);
-  // console.log(products);
-  // for (let i = 0; i < products.length; i++) {
-  //     const product = products[i];
-  //     const name = product[0];
-  //     const infomation = product[1];
-  //     const price = product[2];
-  //     const sale = product[3];
-  //     const type = product[4];
-  //     const quantity = product[5];
-  //     const image = product[6];
-  //     const detail = product[7];
-  //     const value = product[8];
-  //     await pool.execute(
-  //         `INSERT INTO products (product_name, product_description, product_price, product_sale_price, product_type, product_quantity)
-  //           VALUES ('${name}', '${infomation}', ${price}, ${sale}, '${type}', ${quantity});`
-  //       );
-  //     const [rows, fields] = await pool.execute(
-  //         `SELECT max(product_id) as product_id FROM products`
-  //       );
-  //     const product_id = rows[0].product_id;
-  //     await pool.execute(
-  //         `INSERT INTO product_images (product_id, file_path)
-  //                     VALUES (${product_id} ,'${image}')`
-  //       );
-  //     await pool.execute(
-  //         `INSERT INTO product_details (product_id, detail_name, detail_value)
-  //               VALUES (${product_id}, '${detail}', '${value}')`
-  //       );
-  // }
   return res.redirect("/cms");
 };
 
@@ -251,7 +238,7 @@ const updateProductPost = async (req, res) => {
 const updateProductGet = async (req, res) => {
   const [rows, fields] = await pool.execute(
     `SELECT * FROM products inner join product_images on products.product_id = product_images.product_id
-      inner join product_details on products.product_id = product_details.product_id where products.product_id = ${req.params.id}`
+      inner join product_details on products.product_id = product_details.product_id where products.product_id = '${req.params.id}'`
   );
   const result = processing(rows);
   return res.render("updateProduct", { data: result[0] });

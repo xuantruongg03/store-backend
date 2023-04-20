@@ -9,6 +9,9 @@
                             <thead>
                                 <tr>
                                     <th>
+                                        STT
+                                    </th>
+                                    <th>
                                         ID
                                     </th>
                                     <th>
@@ -39,9 +42,12 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                        {{this.product_id}}
+                                        {{@index}}
                                     </td>
                                     <td>
+                                        {{this.product_id}}
+                                    </td>
+                                    <td class="overflow-hidden w-96" style="width: 100px; !important">
                                         {{this.product_name}}
                                     </td>
                                     <td>
@@ -66,7 +72,6 @@
                                 </tr>
                             </tbody>
                             {{/each}}
-
                         </table>
                     </div>
                 </div>

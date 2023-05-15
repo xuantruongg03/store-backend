@@ -1,4 +1,4 @@
-const pool = require("../../../config/connectDatabase");
+const pool = require("../../config/connectDatabase");
 
 const checkIDCustomer = async (id) => {
     const [rows, fields] = await pool.execute(

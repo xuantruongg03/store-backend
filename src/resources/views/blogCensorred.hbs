@@ -3,34 +3,25 @@
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Lịch sửa chữa</h4>
+                    <h4 class="card-title">Bài viết đã duyệt</h4>
                     <div class="table-responsive pt-3">
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th>
+                                        STT
+                                    </th>
+                                    <th>
                                         ID
                                     </th>
                                     <th>
-                                        Tên khách hàng
+                                        Tên bài viết
                                     </th>
                                     <th>
-                                        Giới tính
+                                        Tác giả
                                     </th>
                                     <th>
-                                        Địa chỉ
-                                    </th>
-                                    <th>
-                                        Số điện thoại
-                                    </th>
-                                    <th>
-                                        Email
-                                    </th>
-                                    <th>
-                                        Ngày hẹn
-                                    </th>
-                                    <th>
-                                        Vấn đề
+                                        Mô tả ngắn
                                     </th>
                                     <th>
                                         Thao tác
@@ -42,37 +33,29 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                        {{this.schedule_id}}
+                                        {{@index }}
+                                    </td>
+                                    <td>
+                                        {{this.blog_id}}
+                                    </td>
+                                    <td>
+                                        {{this.blog_title}}
                                     </td>
                                     <td>
                                         {{this.first_name}} {{this.last_name}}
                                     </td>
-                                    <td>
-                                        {{this.gender}}
+                                    <td class="overflow-hidden" style="max-width: 100px !important;">
+                                        {{this.blog_description}}
                                     </td>
                                     <td>
-                                        {{this.address}}
+                                        {{this.blog_visited}}
                                     </td>
                                     <td>
-                                        {{this.number_phone}}
-                                    </td>
-                                    <td>
-                                        {{this.email}}
-                                    </td>
-                                    <td>
-                                        {{this.repair_date}}
-                                    </td>
-                                    <td>
-                                        {{this.problem}}
-                                    </td>
-                                    <td>
-                                        <a href="/cms/export-bill-repair/{{this.schedule_id}}">Xuất hóa đơn</a>
-                                        <a href="/cms/delete-repair/{{this.schedule_id}}">Xóa</a>
+                                        <a href="/cms/delete-blog/{{this.blog_id}}">Xóa</a>
                                     </td>
                                 </tr>
                             </tbody>
                             {{/each}}
-
                         </table>
                     </div>
                 </div>

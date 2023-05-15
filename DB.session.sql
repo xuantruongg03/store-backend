@@ -37,8 +37,16 @@ CREATE TABLE customers (
     username VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     avatar VARCHAR(400) DEFAULT NULL,
-    code VARCHAR(45) DEFAULT NULL
+    code VARCHAR(45) DEFAULT NULL,
+    refresh_token VARCHAR(255) DEFAULT NULL
 );
+
+-- CREATE TABLE refresh_token (
+--     id_refresh_token INT AUTO_INCREMENT PRIMARY KEY,
+--     customer_id VARCHAR(10) NOT NULL,
+--     refresh_token VARCHAR(255) NOT NULL,
+--     FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+-- );
 
 CREATE TABLE orders (
     order_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -81,14 +89,32 @@ CREATE TABLE banners (
 CREATE TABLE repair_schedule (
     schedule_id INT AUTO_INCREMENT PRIMARY KEY,
     customer_id VARCHAR(10) NOT NULL,
-    first_name VARCHAR(255) NOT NULL,
-    last_name VARCHAR(255) NOT NULL,
-    gender VARCHAR(10) NOT NULL,
     address VARCHAR(255) NOT NULL,
     number_phone VARCHAR(255) NOT NULL,
     repair_date VARCHAR(255) NOT NULL,
     problem VARCHAR(255) NOT NULL,
     FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+);
+
+CREATE TABLE blogs (
+    blog_id VARCHAR(50) PRIMARY key,
+    blog_title VARCHAR (255),
+    blog_description TEXT,
+    blog_content TEXT,
+    customer_id VARCHAR(10),
+    blog_image VARCHAR(255),
+    blog_rate int DEFAULT 0,
+    blog_visited int DEFAULT 0,
+    blog_created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    blog_status bit DEFAULT 0,
+    FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+);
+CREATE TABLE comment_blog (
+    comment_blog_id INT AUTO_INCREMENT PRIMARY,
+    blog_id VARCHAR (50),
+    comment_blog_name_user VARCHAR(255),
+    comment_blog_value TEXT,
+    FOREIGN KEY (blog_id) REFERENCES blog (blog_id)
 );
 
 CREATE TABLE whitelist (

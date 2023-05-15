@@ -3,14 +3,16 @@ const nodemailer = require("nodemailer");
 
 const getUser = async (req, res) => {
   try {
-    const { customer_id } = req.user;
+    const { customer_id, refreshToken } = req.user;
+    // console.log(customer_id, refreshToken);
     // console.log(req.user);
     const [rows, feilds] = await pool.query(
-      `SELECT * FROM customers WHERE customer_id = '${customer_id}'`
+      `SELECT first_name, last_name, gender, email, username, avatar FROM customers WHERE customer_id = '${customer_id}'`
     );
     return res.status(200).json({
       message: "Success",
       data: rows,
+        refreshToken,
     });
   } catch (error) {
     return res.status(500).json({
@@ -22,33 +24,33 @@ const getUser = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     let { first_name, last_name, avatar } = req.body;
-    const { customer_id } = req.user;
+    const { data, refreshToken } = req.user;
     await pool.execute(
-      `UPDATE customers SET first_name = '${first_name}', last_name = '${last_name}', avatar = '${avatar}' WHERE customer_id = '${customer_id}'`
+      `UPDATE customers SET first_name = '${first_name}', last_name = '${last_name}', avatar = '${avatar}' WHERE customer_id = '${data.customer_id}'`
     );
     return res.status(200).json({
       message: "ok",
+      refreshToken
     });
   } catch (error) {
     return res.status(500).json({
-      message: "Internal Server Error",
+      message: "Internal Server Error"
     });
   }
 };
 
 const getCapcha = async (req, res) => {
   const { username, email } = req.body;
-//   console.log(username, email);
   if (!username || !email) {
     return res.status(400).json({
       message: "Not found username or email",
     });
   }
   const [rows, feilds] = await pool.query(
-    `SELECT * FROM customers WHERE username = '${username}' AND email = '${email}'`
+    `SELECT count(*) FROM customers WHERE username = '${username}' AND email = '${email}'`
   );
 //   console.log(rows);
-  if (rows.length <= 0) {
+  if (rows[0]["count(*)"] == 0) {
     return res.sendStatus(401).json({
       message: "Not found username",
     });
@@ -105,7 +107,7 @@ const getCapcha = async (req, res) => {
 };
 
 const changePassword = async (req, res) => {
-//   const { customer_id } = req.user;
+//   const { data, refreshToken } = req.user;
   const { code, password, email, username } = req.body;
     const newPassword = password;
     if (!code || !password || !email || !username) {
@@ -138,7 +140,7 @@ const changePassword = async (req, res) => {
 };
 
 const changeEmail = async (req, res) => {
-  const { customer_id } = req.user;
+  const { data, refreshToken } = req.user;
   const { capcha, newEmail, oldEmail } = req.body;
   if (!customer_id) {
     return res.status(400).json({

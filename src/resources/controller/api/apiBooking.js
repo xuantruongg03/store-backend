@@ -2,20 +2,16 @@ const pool = require("../../config/connectDatabase");
 
 const booking = async (req, res) => {
   const {
-    first_name,
-    last_name,
-    gender,
     address,
     number_phone,
     repair_date,
     problem,
-    email,
   } = req.body;
   const { customer_id } = req.user;
   try {
     await pool.execute(
-      `INSERT INTO repair_schedule (customer_id, first_name, last_name, gender, address, number_phone, email, repair_date, problem)
-            VALUES ('${customer_id}', '${first_name}', '${last_name}', '${address}', '${gender}', '${number_phone}', '${email}', '${repair_date}', '${problem}')`
+      `INSERT INTO repair_schedule (customer_id, address, number_phone, repair_date, problem)
+            VALUES ('${customer_id}', '${address}', '${number_phone}', '${repair_date}', '${problem}')`
     );
   } catch (error) {
     return res.status(500).json({

@@ -5,6 +5,7 @@ const Customers = require("../controller/web/Customers");
 const Order = require("../controller/web/Orders");
 const Banners = require("../controller/web/Banners");
 const Booking = require("../controller/web/Bookings");
+const Blog = require("../controller/web/Blog");
 const { checkIpInWhitelist } = require("../../middleware/AuthorWeb");
 let router = express.Router();
 const multer = require("multer");
@@ -20,7 +21,11 @@ const initWebRoute = (app) => {
     uploadCloud.array("image", 10),
     Products.createNewProduct
   );
-  router.post("/post-product-excel", upload.single('file'), Products.postProductExcel);
+  router.post(
+    "/post-product-excel",
+    upload.single("file"),
+    Products.postProductExcel
+  );
   router.get("/post-product-excel", Products.createNewProductExcel);
   router.get("/update-product/:id", Products.updateProductGet);
   router.post(
@@ -38,7 +43,7 @@ const initWebRoute = (app) => {
   router.get("/get-orders", Order.getOrder);
   router.get("/export-bill/:customer_id", Order.exportBill);
   router.get("/delete-order/:customer_id", Order.deleteOrder);
-  
+
   //Web banner
   router.get("/get-banners", Banners.getBanner);
   router.get("/post-banner", Banners.postBannerPage);
@@ -49,6 +54,12 @@ const initWebRoute = (app) => {
   router.get("/get-bookings", Booking.getBookings);
   router.get("/export-bill-repair/:schedule_id", Booking.exportBill);
   router.get("/delete-repair/:schedule_id", Booking.deleteRepair);
+
+  //Web blog
+  router.get("/get-censoring", Blog.getCensoring);
+  router.get("/get-censorred", Blog.getCensorred);
+  router.get("/delete-blog/:id", Blog.deleteBlog);
+  router.get("/censor-blog/:id", Blog.sensorBlog);
 
   return app.use("/cms", checkIpInWhitelist, router);
 };

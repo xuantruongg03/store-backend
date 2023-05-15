@@ -3,28 +3,38 @@ const pool = require("../../config/connectDatabase");
 
 let addToCart = async (req, res) => {
   let { customer_id, product_id, quantity } = req.body;
+  let { refreshToken } = req.user;
   if (!customer_id || !product_id || !quantity) {
     return res.status(400).json({
       message: "error",
     });
   }
-  const [rows, fields] = await pool.execute(
-    `SELECT * FROM cart WHERE customer_id = '${customer_id}' and product_id = '${product_id}'`
-  );
-  if (rows.length > 0) {
-    await pool.execute(
-      `UPDATE cart SET quantity = quantity + ${quantity} WHERE customer_id = '${customer_id}' and product_id = '${product_id}'`
-    );
-    return res.status(200).json({
-      message: "ok",
-    });
+  try {
+    const [rows, fields] = await pool.execute(
+        `SELECT * FROM cart WHERE customer_id = '${customer_id}' and product_id = '${product_id}'`
+      );
+      if (rows.length > 0) {
+        await pool.execute(
+          `UPDATE cart SET quantity = quantity + ${quantity} WHERE customer_id = '${customer_id}' and product_id = '${product_id}'`
+        );
+        return res.status(200).json({
+          message: "ok",
+          refreshToken
+        });
+      }
+      await pool.execute(
+        `INSERT INTO cart (customer_id, product_id, quantity) VALUES ('${customer_id}', '${product_id}', ${quantity})`
+      );
+      return res.status(200).json({
+        message: "ok",
+        refreshToken
+      });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+        message: "Internal Server Error",
+    })
   }
-  await pool.execute(
-    `INSERT INTO cart (customer_id, product_id, quantity) VALUES ('${customer_id}', '${product_id}', ${quantity})`
-  );
-  return res.status(200).json({
-    message: "ok",
-  });
 };
 
 const buy = async (req, res) => {
@@ -39,7 +49,7 @@ const buy = async (req, res) => {
     notes,
     payment,
   } = req.body;
-
+  let { refreshToken } = req.user;
   try {
       const date = new Date()
     await pool.execute(
@@ -57,27 +67,30 @@ const buy = async (req, res) => {
     );
     return res.status(200).json({
       message: "ok",
+      refreshToken
     });
   } catch (error) {
     console.log(error);
-    return res.status(400).json({
-      message: "error",
+    return res.status(500).json({
+      message: "Internal Server Error",
     });
   }
 };
 
 const deleteProductCart = async (req, res) => {
   let { customer_id, product_id } = req.body;
+  let { refreshToken } = req.user;
   try {
     await pool.execute(
       `DELETE FROM cart WHERE product_id = '${product_id}' and customer_id = '${customer_id}'`
     );
     return res.status(200).json({
       message: "ok",
+    refreshToken
     });
   } catch (error) {
-    return res.status(400).json({
-      message: "error",
+    return res.status(500).json({
+      message: "Internal Server Error"
     });
   }
 };
@@ -85,6 +98,7 @@ const deleteProductCart = async (req, res) => {
 const getCart = async (req, res) => {
   try {
     let { customer_id } = req.user;
+    let { refreshToken } = req.user;
     let [cart, fieldsCart] = await pool.execute(
       `SELECT products.product_name, product_images.file_path, products.product_price, cart.quantity, cart.cart_id, cart.product_id
       FROM (cart inner join products on cart.product_id = products.product_id) inner join product_images on 
@@ -93,11 +107,12 @@ const getCart = async (req, res) => {
     return res.status(200).json({
       message: "ok",
       data: processing(cart),
+        refreshToken
     });
   } catch (error) {
-    console.log(error);
     return res.status(500).json({
-      message: "error",
+      message: "Internal Server Error",
+      refreshToken
     });
   }
 };

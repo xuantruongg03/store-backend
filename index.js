@@ -20,26 +20,6 @@ app.use(express.json());
 
 app.use(cookieParser());
 //Template Engine
-// app.engine(
-//   "hbs",
-//   handlebars.engine({
-//     extname: ".hbs",
-    // helpers: {
-    //   // Function to do basic mathematical operation in handlebar
-    //   math: function (lvalue, operator, rvalue) {
-    //     lvalue = parseFloat(lvalue);
-    //     rvalue = parseFloat(rvalue);
-    //     return {
-    //       "+": lvalue + rvalue,
-    //       "-": lvalue - rvalue,
-    //       "*": lvalue * rvalue,
-    //       "/": lvalue / rvalue,
-    //       "%": lvalue % rvalue,
-    //     }[operator];
-    //   },
-    // },
-//   })
-// );
 
 // app.set("view engine", "hbs");
 app.engine('.hbs', handlebars({extname: '.hbs', helpers: {

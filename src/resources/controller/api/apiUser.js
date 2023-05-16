@@ -2,41 +2,55 @@ const pool = require("../../config/connectDatabase");
 const nodemailer = require("nodemailer");
 
 const getUser = async (req, res) => {
-  try {
-    const { customer_id, refreshToken } = req.user;
-    // console.log(customer_id, refreshToken);
-    // console.log(req.user);
-    const [rows, feilds] = await pool.query(
-      `SELECT first_name, last_name, gender, email, username, avatar FROM customers WHERE customer_id = '${customer_id}'`
-    );
-    return res.status(200).json({
-      message: "Success",
-      data: rows,
-        refreshToken,
-    });
-  } catch (error) {
-    return res.status(500).json({
-      message: "Internal Server Error",
-    });
+  const stateLogin = req.login;
+  if (stateLogin) {
+    try {
+      const customer_id = req.user;
+      const refreshToken = req.refreshToken;
+      const token = req.newToken;
+
+      const [rows, feilds] = await pool.query(
+        `SELECT first_name, last_name, gender, email, username, avatar FROM customers WHERE customer_id = '${customer_id}'`
+      );
+      return res.status(200).json({
+        message: "Success",
+        data: rows,
+        login: stateLogin,
+        refreshToken: refreshToken,
+        newToken: token
+      });
+    } catch (error) {
+      return res.status(500).json({
+        message: "Internal Server Error",
+      });
+    }
+  } else {
+    return res.status(401).json({ message: "Unauthorized" });
   }
 };
 
 const updateUser = async (req, res) => {
-  try {
-    let { first_name, last_name, avatar } = req.body;
-    const { data, refreshToken } = req.user;
-    await pool.execute(
-      `UPDATE customers SET first_name = '${first_name}', last_name = '${last_name}', avatar = '${avatar}' WHERE customer_id = '${data.customer_id}'`
-    );
-    return res.status(200).json({
-      message: "ok",
-      refreshToken
-    });
-  } catch (error) {
-    return res.status(500).json({
-      message: "Internal Server Error"
-    });
-  }
+  const stateLogin = req.login;
+    if (stateLogin) {
+        try {
+            let { first_name, last_name, avatar } = req.body;
+            const customer_id = req.user;
+            const refreshToken = req.refreshToken;
+            const token = req.newToken;
+            await pool.execute(
+              `UPDATE customers SET first_name = '${first_name}', last_name = '${last_name}', avatar = '${avatar}' WHERE customer_id = '${customer_id}'`
+            );
+            return res.status(200).json({
+              message: "ok",
+              refreshToken: refreshToken,
+              newToken: token
+            });
+          } catch (error) {
+            return res.status(500).json({ message: "Internal Server Error" });
+          }
+    } else {
+        return res.status(401).json({ message: "Unauthorized" });
+    }
 };
 
 const getCapcha = async (req, res) => {
@@ -49,7 +63,7 @@ const getCapcha = async (req, res) => {
   const [rows, feilds] = await pool.query(
     `SELECT count(*) FROM customers WHERE username = '${username}' AND email = '${email}'`
   );
-//   console.log(rows);
+  //   console.log(rows);
   if (rows[0]["count(*)"] == 0) {
     return res.sendStatus(401).json({
       message: "Not found username",
@@ -94,8 +108,8 @@ const getCapcha = async (req, res) => {
           );
         }, 2000 * 60);
         return res.status(200).json({
-            message: "ok",
-        })
+          message: "ok",
+        });
       }
     });
   } catch (error) {
@@ -107,14 +121,14 @@ const getCapcha = async (req, res) => {
 };
 
 const changePassword = async (req, res) => {
-//   const { data, refreshToken } = req.user;
+  //   const { data, refreshToken } = req.user;
   const { code, password, email, username } = req.body;
-    const newPassword = password;
-    if (!code || !password || !email || !username) {
-        return res.status(400).json({
-            message: "Not found code or password or email or username",
-        });
-    }
+  const newPassword = password;
+  if (!code || !password || !email || !username) {
+    return res.status(400).json({
+      message: "Not found code or password or email or username",
+    });
+  }
   try {
     const [rows, feilds] = await pool.query(
       `SELECT * FROM customers WHERE username = '${username}' AND email = '${email}'`
@@ -125,7 +139,7 @@ const changePassword = async (req, res) => {
       );
       return res.status(200).json({
         message: "ok",
-      })
+      });
     } else {
       return res.status(400).json({
         message: "Code is not correct",

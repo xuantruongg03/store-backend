@@ -109,12 +109,13 @@ CREATE TABLE blogs (
     blog_status bit DEFAULT 0,
     FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
 );
-CREATE TABLE comment_blog (
-    comment_blog_id INT AUTO_INCREMENT PRIMARY,
+CREATE TABLE comments_blog (
+    comment_blog_id INT AUTO_INCREMENT PRIMARY KEY,
     blog_id VARCHAR (50),
     comment_blog_name_user VARCHAR(255),
     comment_blog_value TEXT,
-    FOREIGN KEY (blog_id) REFERENCES blog (blog_id)
+    comment_blog_created_at VARCHAR(255),
+    FOREIGN KEY (blog_id) REFERENCES blogs (blog_id)
 );
 
 CREATE TABLE whitelist (

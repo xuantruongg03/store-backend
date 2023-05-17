@@ -5,7 +5,7 @@
   "main": "./index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon ./index.js",
+    "start": "nodemon ./index.js node ./backup.js",
     "build": "webpack --config webpack.config.js"
   },
   "author": "",
@@ -14,6 +14,7 @@
     "assert": "^2.0.0",
     "bcrypt": "^5.1.0",
     "buffer": "^6.0.3",
+    "child_process": "^1.0.2",
     "cloudinary": "^1.36.1",
     "constants": "^0.0.2",
     "cookie-parser": "^1.4.6",
@@ -30,6 +31,7 @@
     "multer-storage-cloudinary": "^4.0.0",
     "mysql2": "^3.2.3",
     "net": "^1.0.2",
+    "node-cron": "^3.0.2",
     "nodemailer": "^6.9.1",
     "path": "^0.12.7",
     "pdfkit": "^0.13.0",

@@ -8,22 +8,22 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>
+                                    <th class="text-center">
                                         STT
                                     </th>
-                                    <th>
+                                    <th class="text-center">
                                         ID
                                     </th>
-                                    <th>
+                                    <th class="text-center">
                                         Tên bài viết
                                     </th>
-                                    <th>
+                                    <th class="text-center">
                                         Tác giả
                                     </th>
-                                    <th>
+                                    <th class="text-center">
                                         Mô tả ngắn
                                     </th>
-                                    <th>
+                                    <th class="text-center">
                                         Thao tác
                                     </th>
                                 </tr>
@@ -32,25 +32,22 @@
                             {{#each data}}
                             <tbody>
                                 <tr>
-                                    <td>
+                                    <td class="text-center">
                                         {{@index }}
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         {{this.blog_id}}
                                     </td>
-                                    <td>
+                                    <td class="truncate text-center" style="max-width: 300px !important;">
                                         {{this.blog_title}}
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         {{this.first_name}} {{this.last_name}}
                                     </td>
-                                    <td class="overflow-hidden" style="max-width: 100px !important;">
+                                    <td class="truncate text-center" style="max-width: 300px !important;">
                                         {{this.blog_description}}
                                     </td>
-                                    <td>
-                                        {{this.blog_visited}}
-                                    </td>
-                                    <td>
+                                    <td class="text-center">
                                         <a href="/cms/delete-blog/{{this.blog_id}}">Xóa</a>
                                     </td>
                                 </tr>

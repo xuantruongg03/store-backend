@@ -17,7 +17,7 @@ const getUser = async (req, res) => {
         data: rows,
         login: stateLogin,
         refreshToken: refreshToken,
-        newToken: token
+        newToken: token,
       });
     } catch (error) {
       return res.status(500).json({
@@ -31,26 +31,26 @@ const getUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
   const stateLogin = req.login;
-    if (stateLogin) {
-        try {
-            let { first_name, last_name, avatar } = req.body;
-            const customer_id = req.user;
-            const refreshToken = req.refreshToken;
-            const token = req.newToken;
-            await pool.execute(
-              `UPDATE customers SET first_name = '${first_name}', last_name = '${last_name}', avatar = '${avatar}' WHERE customer_id = '${customer_id}'`
-            );
-            return res.status(200).json({
-              message: "ok",
-              refreshToken: refreshToken,
-              newToken: token
-            });
-          } catch (error) {
-            return res.status(500).json({ message: "Internal Server Error" });
-          }
-    } else {
-        return res.status(401).json({ message: "Unauthorized" });
+  if (stateLogin) {
+    try {
+      let { first_name, last_name, avatar } = req.body;
+      const customer_id = req.user;
+      const refreshToken = req.refreshToken;
+      const token = req.newToken;
+      await pool.execute(
+        `UPDATE customers SET first_name = '${first_name}', last_name = '${last_name}', avatar = '${avatar}' WHERE customer_id = '${customer_id}'`
+      );
+      return res.status(200).json({
+        message: "ok",
+        refreshToken: refreshToken,
+        newToken: token,
+      });
+    } catch (error) {
+      return res.status(500).json({ message: "Internal Server Error" });
     }
+  } else {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
 };
 
 const getCapcha = async (req, res) => {
@@ -137,6 +137,9 @@ const changePassword = async (req, res) => {
       await pool.execute(
         `UPDATE customers SET password = '${newPassword}' WHERE username = '${username}' AND email = '${email}'`
       );
+      await pool.execute(
+        `update customers set code = null where username = '${username}' AND email = '${email}'`
+      );
       return res.status(200).json({
         message: "ok",
       });
@@ -154,34 +157,49 @@ const changePassword = async (req, res) => {
 };
 
 const changeEmail = async (req, res) => {
-  const { data, refreshToken } = req.user;
-  const { capcha, newEmail, oldEmail } = req.body;
-  if (!customer_id) {
-    return res.status(400).json({
-      message: "Not found customer_id",
-    });
-  }
-  try {
-    const [rows, feilds] = await pool.query(
-      `SELECT email FROM customers WHERE customer_id = '${customer_id}'`
-    );
-    if (rows[0].email === oldEmail) {
-      await pool.execute(
-        `UPDATE customers SET email = '${newEmail}' WHERE customer_id = ${customer_id}`
+  const customer_id = req.user;
+  const refreshToken = req.refreshToken;
+  const token = req.newToken;
+  const stateLogin = req.login;
+  if (stateLogin) {
+    const { capcha, newEmail, oldEmail } = req.body;
+    try {
+      const [rows, feilds] = await pool.query(
+        `SELECT email FROM customers WHERE customer_id = '${customer_id}'`
       );
-      return res.status(200).json({
-        message: "ok",
-      });
-    } else {
-      return res.status(400).json({
-        message: "Old email is not correct",
+      if (rows.length === 0) {
+        return res.status(400).json({
+          message: "Not found email",
+          refreshToken: refreshToken,
+          newToken: token,
+          login: stateLogin,
+        });
+      }
+      if (rows[0].email === oldEmail) {
+        await pool.execute(
+          `UPDATE customers SET email = '${newEmail}' WHERE customer_id = ${customer_id}`
+        );
+        return res.status(200).json({
+          message: "ok",
+          refreshToken: refreshToken,
+          newToken: token,
+          login: stateLogin,
+        });
+      } else {
+        return res.status(400).json({
+          message: "Old email is not correct",
+          refreshToken: refreshToken,
+          newToken: token,
+          login: stateLogin,
+        });
+      }
+    } catch (error) {
+      return res.status(500).json({
+        message: "Internal Server Error",
       });
     }
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({
-      message: "Internal Server Error",
-    });
+  } else {
+    return res.status(401).json({ message: "Unauthorized" });
   }
 };
 

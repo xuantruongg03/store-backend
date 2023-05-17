@@ -26,6 +26,7 @@ const initAPIWebRoute = (app) => {
   router.post("/get-capcha", User.getCapcha);
   router.post("/change-password", User.changePassword);
   router.post("/forgot-password", User.forgotPassword);
+  router.post("/change-email", VerifyToken, RefreshToken, User.changeEmail);
 
   //Cart API
   router.post("/add-to-cart", VerifyToken, RefreshToken, Cart.addToCart);
@@ -37,8 +38,8 @@ const initAPIWebRoute = (app) => {
   router.post("/post-blog", VerifyToken, RefreshToken, Blog.postBlog);
   router.get("/get-all-blog", VerifyToken, RefreshToken, Blog.getAllBlog);
   router.get("/get-blog-detail", VerifyToken, RefreshToken, Blog.getBlogDetail);
-    router.post("/comment-blog", VerifyToken, RefreshToken, Blog.commentBlog);
-    router.get("/get-comment-blog", Blog.getComments);
+  router.post("/comment-blog", VerifyToken, RefreshToken, Blog.commentBlog);
+  router.get("/get-comment-blog", Blog.getComments);
   router.post("/rate-blog", VerifyToken, RefreshToken, Blog.rateBlog);
 
   //Another API

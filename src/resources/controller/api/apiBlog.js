@@ -151,6 +151,29 @@ const getBlogDetail = async (req, res) => {
   }
 };
 
+const getBlogByAuthor = async (req, res) => {
+  const stateLogin = req.login;
+  if (stateLogin) {
+    const customer_id = req.user;
+    const refreshToken = req.refreshToken;
+    const token = req.newToken;
+
+    try {
+      const [rows, fields] = await pool.execute(
+        `select blog_id, blog_title, blog_description, blog_content, blog_rate, blog_image, blog_created_at from blogs where customer_id = '${customer_id}'`
+      );
+      return res.status(200).json({
+        data: rows,
+        refreshToken: refreshToken,
+        newToken: token,
+      });
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  }
+};
+
 module.exports = {
   postBlog,
   getAllBlog,
@@ -158,4 +181,5 @@ module.exports = {
   rateBlog,
   commentBlog,
   getComments,
+  getBlogByAuthor
 };

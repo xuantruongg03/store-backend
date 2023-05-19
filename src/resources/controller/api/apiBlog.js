@@ -26,6 +26,8 @@ const postBlog = async (req, res) => {
     try {
       let date = new Date();
       blog_content = blog_content.replace(/'/g, "\\'");
+      blog_title = blog_title.replace(/'/g, "\\'");
+      blog_description = blog_description.replace(/'/g, "\\'");
       do {
         blog_id = `${date.getDate()}${date.getMonth()}${date
           .getFullYear()
@@ -96,15 +98,17 @@ const commentBlog = async (req, res) => {
 };
 
 const getComments = async (req, res) => {
-    const { blog_id } = req.query;
-    try {
-        const [rows, fields] = await pool.execute(`select comment_blog_name_user as name_user, comment_blog_value as value_user, comment_blog_created_at as created_at from comments_blog where blog_id = '${blog_id}'`);
-        return res.status(200).json({ data: rows });
-    } catch (error) {
-        console.log(error);
-        return res.status(500).json({ message: "Internal server error" });
-    }
-}
+  const { blog_id } = req.query;
+  try {
+    const [rows, fields] = await pool.execute(
+      `select comment_blog_name_user as name_user, comment_blog_value as value_user, comment_blog_created_at as created_at from comments_blog where blog_id = '${blog_id}'`
+    );
+    return res.status(200).json({ data: rows });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
 
 const getAllBlog = async (req, res) => {
   try {
@@ -147,4 +151,11 @@ const getBlogDetail = async (req, res) => {
   }
 };
 
-module.exports = { postBlog, getAllBlog, getBlogDetail, rateBlog, commentBlog, getComments };
+module.exports = {
+  postBlog,
+  getAllBlog,
+  getBlogDetail,
+  rateBlog,
+  commentBlog,
+  getComments,
+};

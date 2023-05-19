@@ -163,6 +163,7 @@ const getBlogByAuthor = async (req, res) => {
         `select blog_id, blog_title, blog_description, blog_content, blog_rate, blog_image, blog_created_at from blogs where customer_id = '${customer_id}'`
       );
       return res.status(200).json({
+        message: ok,
         data: rows,
         refreshToken: refreshToken,
         newToken: token,

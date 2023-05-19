@@ -25,6 +25,7 @@ const postBlog = async (req, res) => {
     let blog_id;
     try {
       let date = new Date();
+      blog_content = blog_content.replace(/'/g, "\\'");
       do {
         blog_id = `${date.getDate()}${date.getMonth()}${date
           .getFullYear()

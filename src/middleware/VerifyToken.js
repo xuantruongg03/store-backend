@@ -42,6 +42,7 @@ const VerifyToken = async (req, res, next) => {
                 req.refreshToken = null;
                 return next();
             } else {
+                console.log(err);
                 return res.status(500).json({ message: "Internal server error" });
             }
         }

@@ -131,7 +131,6 @@ const getAllBlog = async (req, res) => {
 const getBlogDetail = async (req, res) => {
   const { blog_id } = req.query;
   const refreshToken = req.refreshToken;
-  console.log(refreshToken);
   const token = req.newToken;
   try {
     const [rows, fields] = await pool.execute(
@@ -141,6 +140,7 @@ const getBlogDetail = async (req, res) => {
       `update blogs set blog_visited = blog_visited + 1 where blog_id = '${blog_id}'`
     );
     return res.status(200).json({
+        message: "ok",
       data: rows[0],
       refreshToken: refreshToken,
       newToken: token,
@@ -175,6 +175,37 @@ const getBlogByAuthor = async (req, res) => {
   }
 };
 
+const deleteBlog = async (req, res) => {
+    const stateLogin = req.login;
+    if (stateLogin) {
+        const customer_id = req.user;
+        const refreshToken = req.refreshToken;
+        const token = req.newToken;
+        const { blog_id } = req.body;
+        try {
+        const [rows, fields] = await pool.execute(
+            `select count(*) from blogs where blog_id = '${blog_id}' and customer_id = '${customer_id}'`
+        );
+        if (rows[0]["count(*)"] === 0) {
+            return res.status(400).json({ message: "Not found blog" });
+        } else {
+            await pool.execute(`delete from comments_blog where blog_id = '${blog_id}'`);
+            await pool.execute(
+            `delete from blogs where blog_id = '${blog_id}'`
+            );
+            return res.status(200).json({
+            message: "ok",
+            refreshToken: refreshToken,
+            newToken: token,
+            });
+        }
+        } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: "Internal server error" });
+        }
+    }
+}
+
 module.exports = {
   postBlog,
   getAllBlog,
@@ -182,5 +213,6 @@ module.exports = {
   rateBlog,
   commentBlog,
   getComments,
-  getBlogByAuthor
+  getBlogByAuthor,
+  deleteBlog
 };

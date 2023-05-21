@@ -42,6 +42,7 @@ const initAPIWebRoute = (app) => {
   router.get("/get-comment-blog", Blog.getComments);
   router.post("/rate-blog", VerifyToken, RefreshToken, Blog.rateBlog);
   router.get("/get-my-blog", VerifyToken, RefreshToken, Blog.getBlogByAuthor);
+  router.post("/delete-blog", VerifyToken, RefreshToken, Blog.deleteBlog);
 
   //Another API
   router.post("/register", register.register);

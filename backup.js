@@ -9,20 +9,22 @@ const userDB = process.env.USER_DB;
 const passwordDB = process.env.PASSWORD_DB;
 const hostDB = process.env.HOST_DB;
 const apiKey = process.env.GOOGLE_API_KEY;
-const backupSchedule = "*/1 * * * *";
+const backupSchedule = "0* * * *";
 const backupFilePath = "backup_db.sql";
 
 const credentials = require("./credentials.json");
-const tokenPath = "token.json";
+const content = require("./token.json");
 
 const oauth2Client = new google.auth.OAuth2(
   credentials.web.client_id,
   credentials.web.client_secret,
   credentials.web.redirect_uris[0]
 );
-
+oauth2Client.setCredentials({
+  refresh_token: content.refresh_token,
+  access_token: content.access_token,
+});
 cron.schedule(backupSchedule, () => {
-  console.log("Starting database backup...");
   exec(
     `mysqldump -h ${hostDB} -u ${userDB} -p"${passwordDB}" ${nameDB} > ${backupFilePath}`,
     (error, stdout, stderr) => {
@@ -62,8 +64,6 @@ cron.schedule(backupSchedule, () => {
     }
   );
 });
-
-
 
 // const { google } = require("googleapis");
 // const cron = require("node-cron");

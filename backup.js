@@ -9,20 +9,23 @@ const userDB = process.env.USER_DB;
 const passwordDB = process.env.PASSWORD_DB;
 const hostDB = process.env.HOST_DB;
 const apiKey = process.env.GOOGLE_API_KEY;
-const backupSchedule = "0* * * *";
+const access_token = process.env.GOOGLE_ACCESS_TOKEN;
+const refresh_token = process.env.GOOGLE_REFRESH_TOKEN;
+const client_id = process.env.GOOGLE_CLIENT_ID;
+const client_secret = process.env.GOOGLE_CLIENT_SECRET;
+const redirect_uris = process.env.GOOGLE_REDIRECT_URIS;
+//backup lúc 0h hằng ngày
+const backupSchedule = "0 * * * *";
 const backupFilePath = "backup_db.sql";
 
-const credentials = require("./credentials.json");
-const content = require("./token.json");
-
 const oauth2Client = new google.auth.OAuth2(
-  credentials.web.client_id,
-  credentials.web.client_secret,
-  credentials.web.redirect_uris[0]
+  client_id,
+    client_secret,
+    redirect_uris
 );
 oauth2Client.setCredentials({
-  refresh_token: content.refresh_token,
-  access_token: content.access_token,
+  refresh_token: refresh_token,
+  access_token: access_token,
 });
 cron.schedule(backupSchedule, () => {
   exec(

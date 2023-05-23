@@ -15,7 +15,7 @@ const refresh_token = process.env.GOOGLE_REFRESH_TOKEN;
 const client_id = process.env.GOOGLE_CLIENT_ID;
 const client_secret = process.env.GOOGLE_TOKEN_SECRET;
 const redirect_uris = process.env.GOOGLE_REDIRECT_URIS;
-//backup lúc 0h hằng ngày
+//backup 1 tiếng 1 lần
 const backupSchedule = "0 * * * *";
 const backupFilePath = "backup_db.sql";
 

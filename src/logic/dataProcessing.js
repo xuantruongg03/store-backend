@@ -4,9 +4,11 @@ const processing = (rows) => {
     id.push(element.product_id);
   });
   const uniqueId = [...new Set(id)];
+  let totalProductLike = 0;
   const result = [];
   uniqueId.map((element) => {
     const product = rows.filter((item) => item.product_id === element);
+    product[0].like === 1 ? totalProductLike++ : totalProductLike;
     const ob = {
       product_id: product[0].product_id,
       product_name: product[0].product_name,
@@ -15,6 +17,7 @@ const processing = (rows) => {
       product_sale_price: product[0].product_sale_price,
       product_type: product[0].product_type,
       product_quantity: product[0].product_quantity,
+      product_like: product[0].like === 1 ? true : false,
     };
     const product_details = [];
     const product_images = [];
@@ -46,6 +49,7 @@ const processing = (rows) => {
     ob.product_details = product_details;
     result.push(ob);
   });
+  result.push({ total_product_like: totalProductLike });
   return result;
 };
 

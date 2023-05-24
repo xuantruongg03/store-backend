@@ -109,7 +109,7 @@ const checkToken = async (req, res) => {
         console.log("refresh token expired");
         return res.status(401).json({ message: "Unauthorized" });
       }
-      const token = RefreshJWT({ customer_id: rows[0].customer_id });
+      const token = refreshToken({ customer_id: rows[0].customer_id });
       newToken = token;
       return res.status(200).json({
         login: true,

@@ -28,6 +28,14 @@ CREATE TABLE product_images (
     FOREIGN KEY (product_id) REFERENCES products(product_id)
 );
 
+CREATE TABLE product_likes (
+    like_id INT AUTO_INCREMENT PRIMARY KEY,
+    product_id VARCHAR(10) NOT NULL,
+    customer_id VARCHAR(10) NOT NULL,
+    FOREIGN KEY (product_id) REFERENCES products(product_id),
+    FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+);
+
 CREATE TABLE customers (
     customer_id VARCHAR(10) NOT NULL PRIMARY KEY,
     first_name VARCHAR(255) NOT NULL,
@@ -40,14 +48,6 @@ CREATE TABLE customers (
     code VARCHAR(45) DEFAULT NULL,
     refresh_token VARCHAR(255) DEFAULT NULL
 );
-
--- CREATE TABLE refresh_token (
---     id_refresh_token INT AUTO_INCREMENT PRIMARY KEY,
---     customer_id VARCHAR(10) NOT NULL,
---     refresh_token VARCHAR(255) NOT NULL,
---     FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
--- );
-
 CREATE TABLE orders (
     order_id INT AUTO_INCREMENT PRIMARY KEY,
     customer_id VARCHAR(10) NOT NULL,

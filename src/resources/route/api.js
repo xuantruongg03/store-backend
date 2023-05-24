@@ -19,6 +19,9 @@ const initAPIWebRoute = (app) => {
   router.get("/get-product-type", VerifyToken, RefreshToken, Products.getProductsType);
   router.get("/get-product-info", VerifyToken, RefreshToken, Products.getInforProduct);
   router.get("/get-product-sale", VerifyToken, RefreshToken, Products.getProductsSale);
+  router.post("/like-product", VerifyToken, RefreshToken, Products.addLikeProduct);
+  router.get("/get-like-product", VerifyToken, RefreshToken, Products.getProductLike);
+  router.post("/unlike-product", VerifyToken, RefreshToken, Products.unLikeProduct);
 
   //User API
   router.get("/get-user", VerifyToken, RefreshToken, User.getUser);

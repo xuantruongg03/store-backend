@@ -49,7 +49,6 @@ const processing = (rows) => {
     ob.product_details = product_details;
     result.push(ob);
   });
-  result.push({ total_product_like: totalProductLike });
   return result;
 };
 

@@ -39,7 +39,6 @@ const getAllProducts = async (req, res) => {
     customer_id: customer_id,
     newToken: token,
     refreshToken: refreshToken,
-    totalProductLike: result[result.length - 1].total_product_like,
   });
 };
 

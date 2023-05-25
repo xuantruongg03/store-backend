@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `cart` (
   KEY `product_id` (`product_id`),
   CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`),
   CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 24 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 30 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: comments_blog
@@ -103,7 +103,7 @@ CREATE TABLE IF NOT EXISTS `order_items` (
   PRIMARY KEY (`order_item_id`),
   KEY `order_id` (`order_id`),
   CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 10 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: orders
@@ -120,7 +120,7 @@ CREATE TABLE IF NOT EXISTS `orders` (
   KEY `product_id` (`product_id`),
   CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`),
   CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 13 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE = InnoDB AUTO_INCREMENT = 17 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: product_details
@@ -148,6 +148,21 @@ CREATE TABLE IF NOT EXISTS `product_images` (
   KEY `product_images_ibfk_1` (`product_id`),
   CONSTRAINT `product_images_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 622 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+
+# ------------------------------------------------------------
+# SCHEMA DUMP FOR TABLE: product_likes
+# ------------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `product_likes` (
+  `like_id` int NOT NULL AUTO_INCREMENT,
+  `product_id` varchar(10) NOT NULL,
+  `customer_id` varchar(10) NOT NULL,
+  PRIMARY KEY (`like_id`),
+  KEY `product_id` (`product_id`),
+  KEY `customer_id` (`customer_id`),
+  CONSTRAINT `product_likes_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`),
+  CONSTRAINT `product_likes_ibfk_2` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`)
+) ENGINE = InnoDB AUTO_INCREMENT = 19 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
 # ------------------------------------------------------------
 # SCHEMA DUMP FOR TABLE: products
@@ -304,7 +319,7 @@ VALUES
     '<p>Tai nghe True Wireless WF-1000XM4 của Sony có thiết kế nhỏ, nhẹ, nhưng được nâng cấp mạnh về tính năng chống ồn và âm thanh so với thế hệ trước.</p><p>WF-1000XM4 giải quyết được nhược điểm của thế hệ trước là thiết kế to và nặng, khó sử dụng trong thời gian dài. Ngoài ra sản phẩm còn có thêm công nghệ chống nước IPX4. Thời lượng pin cũng được nâng cấp mạnh, với 8 giờ liên tục khi mở chống ồn và 12 giờ khi tắt tính năng này - cao gấp đôi so thế hệ trước. Hộp đựng được làm nhỏ hơn nên chỉ có thể sạc thêm được 2 lần, cho tổng thời gian sử dụng là 24 giờ khi mở chống ồn và 36 giờ khi tắt tính năng này. Sony lần đầu tiên trang bị sạc không dây cho hộp sạc tai nghe của mình, bên khả năng sạc nhanh 5 phút cho một giờ sử dụng.</p><figure class=\"image\"><img src=\"https://i1-sohoa.vnecdn.net/2021/06/09/gsmarena-001-8-1623173530-2046-1623173544.jpg?w=680&amp;h=0&amp;q=100&amp;dpr=1&amp;fit=crop&amp;s=1sPB_MfhuHXh5rXp5-ii2A\" alt=\"WF-1000XM4 sẽ là một trong những mẫu tai nghe chống ồn tốt nhất trên thị trường. Ảnh: Gsmarena.\"></figure><p>WF-1000XM4 sẽ là một trong những mẫu tai nghe chống ồn tốt nhất trên thị trường. Ảnh:&nbsp;<i>Gsmarena.</i></p><p>Sony trang bị chip xử lý V1 mới cho WF-1000XM4 nên cải thiện chất lượng âm thanh và khả năng chống ồn. Đây là tai nghe True Wireless đầu tiên thế giới hỗ trợ âm thanh Hi-res chuẩn LDAC, có dữ liệu âm thanh cao gấp 3 lần so với Bluetooth thông thường. Ngoài ra, tính năng DSEE Extreme sử dụng AI để tái tạo lại âm thanh đã nén với chất lượng gần với Hi-res.</p><p>Về khả năng chống ồn, chip V1 loại bỏ được âm thanh tần số cao tốt hơn 40% so với XM3, Sony cũng sử dụng driver lớn hơn 20% cùng bộ khuếch đại 24-bit được cải tiến để loại âm thanh tần số thấp và tạo ra âm trầm tốt hơn. Các đầu mút tai nghe làm bằng polyurethane cũng giảm tiếng ồn.</p><p>Khả năng kết nối cũng được cải thiện với tốc độ ghép nối nhanh cho Android và Windows 10 thay vì phải làm thủ công khá phức tạp như thế hệ trước. WF-1000XM4 có thể tự phát hiện tiếng nói của người dùng để tạm dừng nhạc và tự động bật chế độ Âm thanh xung quanh để người dùng nói chuyện dễ dàng mà không cần lấy tai nghe ra, hay phải kích hoạt chế độ Âm thanh xung quanh bằng tay. Tính năng này giống Samsung Galaxy Buds Pro hay Huawei Free Buds Pro. Micro cũng được cải tiến để thu giọng nói tốt hơn. Tai nghe của Sony cũng được tối ưu hóa cho Google Assistant và Alexa.</p><p>Sony WF-1000XM4 có giá 280 USD, đắt hơn AirPods Pro 50 USD và Galaxy Buds Pro 80 USD.</p>',
     '2057925',
     0,
-    3,
+    4,
     '2023-05-20 18:22:29',
     b'1',
     'https://res.cloudinary.com/dvyutdqkj/image/upload/v1684067019/image_users/b4khmssuvjsqotlzwehm.jpg'
@@ -330,7 +345,7 @@ VALUES
     '<p>Hai smartphone đắt nhất của Samsung sẽ có giá rẻ hơn 400 USD so với thế hệ trước.</p><p>Theo báo cáo của&nbsp;<i>SamMobile</i>&nbsp;nhằm phổ biến smartphone màn hình gập cũng như hoàn thành mục tiêu 7 triệu máy của hai model khi ra mắt,&nbsp;Galaxy Z Fold 3&nbsp;và&nbsp;Galaxy Z Flip 3&nbsp;sẽ rẻ hơn 20% so&nbsp;Z Fold 2&nbsp;và&nbsp;Z Flip. Theo đó, Galaxy Z Fold 3 sẽ có giá 1.599 USD và Z Flip 3 là 959 USD.</p><figure class=\"image\"><img src=\"https://i1-sohoa.vnecdn.net/2021/06/08/insider-hints-at-likely-samsun-1694-1549-1623088597.jpg?w=680&amp;h=0&amp;q=100&amp;dpr=1&amp;fit=crop&amp;s=bYAMpJ-8yHbcRV_gkntPng\" alt=\"Samsung đang dẫn đầu thị trường về smartphone màn hình gập. Ảnh:Phonearena.\"><figcaption>Samsung đang dẫn đầu thị trường về smartphone màn hình gập</figcaption></figure><p>&nbsp;</p><p>Hai model này sẽ được trang bị chip xử lý mới nhất của&nbsp;Qualcomm&nbsp;- Snapdragon 888. Z Flip 3 chưa có thông tin về cấu hình, còn Z Fold 3 sẽ được trang bị 12 GB RAM và bộ nhớ trong 256 GB.</p><p>Z Fold 3 có màn hình ngoài 6,21 inch, màn hình trong nhỏ hơn so với thế hệ trước, còn 7,55 inch. Máy sẽ có pin 4.380 mAh, hỗ trợ sạc nhanh 25W. Máy chạy&nbsp;Android 11&nbsp;khi ra mắt và sẽ được nâng cấp lên&nbsp;Android&nbsp;thế hệ mới trong 3 năm.</p><p>Z Flip3 sẽ được trang bị màn hình chính 6,9 inch, tốc độ làm tươi 120 Hz và có viền mỏng cùng camera trước dạng đục lỗ nhỏ hơn. Màn hình bên ngoài cũng tăng kích thước. Đi kèm là pin 3.900 mAh.</p><p>Nếu năm nay&nbsp;Samsung&nbsp;khai tử dòng Galaxy Note, Z Fold 3 sẽ được hỗ trợ S Pen và bút này sẽ tích hợp trong máy. Hãng cũng sẽ sử dụng kính siêu mỏng UTG thế hệ thứ hai với độ bền cao hơn cho Z Fold 3.</p><p>Galaxy Z Flip 3 sẽ sử dụng cụm camera giống&nbsp;Galaxy S21, với camera chính và camera góc siêu rộng 12 megapixel, camera tele 64 megapixel với khả năng zoom hybrid 3x. Galaxy Z Fold 3 có thể trang bị camera giống&nbsp;S21 Ultra. Ngoài ra, model này cũng được trang bị camera ẩn dưới màn hình.</p><p>Theo&nbsp;<i>Ice Universe</i>, sự kiện Unpacked của Samsung có thể diễn ra vào giữa hoặc cuối tháng 6. Hai model Galaxy Z Fold 3 và Z Flip 3 sẽ được giao đến khách hàng trong tháng 7.</p>',
     '2057925',
     0,
-    15,
+    16,
     '2023-05-20 19:04:13',
     b'1',
     'https://res.cloudinary.com/dvyutdqkj/image/upload/v1684061156/image_users/z7dmwkentrwzunsgfkeb.jpg'
@@ -351,19 +366,11 @@ VALUES
 INSERT INTO
   `cart` (`cart_id`, `customer_id`, `product_id`, `quantity`)
 VALUES
-  (20, '2057925', 'L2025911', 1);
-INSERT INTO
-  `cart` (`cart_id`, `customer_id`, `product_id`, `quantity`)
-VALUES
-  (21, '2057925', 'A2025119', 1);
-INSERT INTO
-  `cart` (`cart_id`, `customer_id`, `product_id`, `quantity`)
-VALUES
-  (22, '2057925', 'A202568', 4);
-INSERT INTO
-  `cart` (`cart_id`, `customer_id`, `product_id`, `quantity`)
-VALUES
   (23, '2057925', 'L2025920', 1);
+INSERT INTO
+  `cart` (`cart_id`, `customer_id`, `product_id`, `quantity`)
+VALUES
+  (24, '2057925', 'L2025788', 3);
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: comments_blog
@@ -398,7 +405,7 @@ VALUES
     '$2a$10$hOT9qe.821jbGehYiOugROkN95/xzMqZS1Zt/zoMVmly3y3bSYXBW',
     'https://res.cloudinary.com/dvyutdqkj/image/upload/v1681991657/image_users/ilrmuzkoups7zypsrujb.jpg',
     NULL,
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0b21lcl9pZCI6IjIwNTc5MjUiLCJpYXQiOjE2ODQ2MzcxNzgsImV4cCI6MTY4NDcyMzU3OH0.d0PruIhZ-JOSkOjHhEsgJbc-KPTyPD-Q3bnv8TkzAkw'
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0b21lcl9pZCI6IjIwNTc5MjUiLCJpYXQiOjE2ODUwMDEyNDUsImV4cCI6MTY4NTA4NzY0NX0.9DLiY9H-SACAgsoZHbA27jSfJ-KnBDRnSVbU7IRLfks'
   );
 INSERT INTO
   `customers` (
@@ -424,7 +431,7 @@ VALUES
     '$2a$10$5DLGNsrdMpKxr4hLY1wA6u.UbR/9K7eOim/yaCwwhjwr5TXZ.fxTe',
     NULL,
     NULL,
-    NULL
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0b21lcl9pZCI6IjIyMjIzOTkiLCJpYXQiOjE2ODQ5MjEyMDYsImV4cCI6MTY4NTAwNzYwNn0.eOo7rQ_ZGimwkcLLa4oH9hZU7YruTZdGylxrxaBc_zc'
   );
 INSERT INTO
   `customers` (
@@ -457,11 +464,139 @@ VALUES
 # DATA DUMP FOR TABLE: order_items
 # ------------------------------------------------------------
 
+INSERT INTO
+  `order_items` (
+    `order_item_id`,
+    `order_id`,
+    `first_name`,
+    `last_name`,
+    `address`,
+    `number_phone`,
+    `notes`,
+    `payment`
+  )
+VALUES
+  (
+    10,
+    13,
+    'Le Xuan',
+    'Truong',
+    '147 An Duong Vuong - Xã Cao Sơn - Huyện Đà Bắc',
+    '0981793201',
+    '',
+    'cod'
+  );
+INSERT INTO
+  `order_items` (
+    `order_item_id`,
+    `order_id`,
+    `first_name`,
+    `last_name`,
+    `address`,
+    `number_phone`,
+    `notes`,
+    `payment`
+  )
+VALUES
+  (
+    11,
+    16,
+    'Le Xuan',
+    'Truong',
+    '147 An Duong Vuong - Xã Cao Sơn - Huyện Đà Bắc',
+    '0981793201',
+    '',
+    'cod'
+  );
+INSERT INTO
+  `order_items` (
+    `order_item_id`,
+    `order_id`,
+    `first_name`,
+    `last_name`,
+    `address`,
+    `number_phone`,
+    `notes`,
+    `payment`
+  )
+VALUES
+  (
+    12,
+    16,
+    'Le Xuan',
+    'Truong',
+    '147 An Duong Vuong - Xã Cao Sơn - Huyện Đà Bắc',
+    '0981793201',
+    '',
+    'cod'
+  );
+INSERT INTO
+  `order_items` (
+    `order_item_id`,
+    `order_id`,
+    `first_name`,
+    `last_name`,
+    `address`,
+    `number_phone`,
+    `notes`,
+    `payment`
+  )
+VALUES
+  (
+    13,
+    16,
+    'Le Xuan',
+    'Truong',
+    '147 An Duong Vuong - Xã Cao Sơn - Huyện Đà Bắc',
+    '0981793201',
+    '',
+    'cod'
+  );
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: orders
 # ------------------------------------------------------------
 
+INSERT INTO
+  `orders` (
+    `order_id`,
+    `customer_id`,
+    `product_id`,
+    `order_date`,
+    `order_quantity`
+  )
+VALUES
+  (13, '2057925', 'A2025119', '5/24/2023', 1);
+INSERT INTO
+  `orders` (
+    `order_id`,
+    `customer_id`,
+    `product_id`,
+    `order_date`,
+    `order_quantity`
+  )
+VALUES
+  (14, '2057925', 'A202516', '5/24/2023', 1);
+INSERT INTO
+  `orders` (
+    `order_id`,
+    `customer_id`,
+    `product_id`,
+    `order_date`,
+    `order_quantity`
+  )
+VALUES
+  (15, '2057925', 'A2025708', '5/24/2023', 1);
+INSERT INTO
+  `orders` (
+    `order_id`,
+    `customer_id`,
+    `product_id`,
+    `order_date`,
+    `order_quantity`
+  )
+VALUES
+  (16, '2057925', 'A2025366', '5/24/2023', 1);
 
 # ------------------------------------------------------------
 # DATA DUMP FOR TABLE: product_details
@@ -5804,6 +5939,27 @@ VALUES
   );
 
 # ------------------------------------------------------------
+# DATA DUMP FOR TABLE: product_likes
+# ------------------------------------------------------------
+
+INSERT INTO
+  `product_likes` (`like_id`, `product_id`, `customer_id`)
+VALUES
+  (6, 'L2025589', '2057925');
+INSERT INTO
+  `product_likes` (`like_id`, `product_id`, `customer_id`)
+VALUES
+  (16, 'A2025119', '2057925');
+INSERT INTO
+  `product_likes` (`like_id`, `product_id`, `customer_id`)
+VALUES
+  (17, 'A202516', '2057925');
+INSERT INTO
+  `product_likes` (`like_id`, `product_id`, `customer_id`)
+VALUES
+  (18, 'A2025708', '2057925');
+
+# ------------------------------------------------------------
 # DATA DUMP FOR TABLE: products
 # ------------------------------------------------------------
 
@@ -5845,7 +6001,7 @@ VALUES
     8500.00,
     10.00,
     'Accessory',
-    18
+    17
   );
 INSERT INTO
   `products` (
@@ -5865,7 +6021,7 @@ VALUES
     1000.00,
     10.00,
     'Accessory',
-    20
+    19
   );
 INSERT INTO
   `products` (
@@ -5885,7 +6041,7 @@ VALUES
     900.00,
     10.00,
     'Accessory',
-    19
+    18
   );
 INSERT INTO
   `products` (
@@ -6005,7 +6161,7 @@ VALUES
     2000.00,
     10.00,
     'Accessory',
-    20
+    19
   );
 INSERT INTO
   `products` (
